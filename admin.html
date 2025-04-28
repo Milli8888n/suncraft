@@ -1,0 +1,2124 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tạo Bài Viết Mới - Suncraft</title>
+    <!-- Add these meta tags to improve responsive behavior -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="theme-color" content="#9c0202" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <!-- Content Security Policy -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; connect-src 'self' https://*.googleapis.com https://translate.googleapis.com https://translate-pa.googleapis.com http://127.0.0.1:5000;"
+    />
+
+    <!-- Add this link tag to include the responsive CSS -->
+    <link rel="stylesheet" href="Adm/adminRpsv.css" />
+    <link rel="stylesheet" href="Adm/admin-responsive-fixes.css" />
+
+    <!-- Add these preconnect links to improve performance -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Noto+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-color: #9c0202;
+        --primary-dark: #6a0000;
+        --secondary-color: #333333;
+        --success-color: #198754;
+        --light-color: #f8f9fa;
+        --sidebar-width: 240px;
+        --border-radius: 8px;
+        --box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08);
+        --transition-speed: 0.3s;
+      }
+
+      /* Base Typography System */
+      body {
+        font-family: "Noto Sans", sans-serif;
+        font-size: 16px;
+        line-height: 1.6;
+        background-color: #f8f9fa;
+        min-height: 100vh;
+        overflow-x: hidden;
+        position: relative;
+        width: 100%;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      .nav-link,
+      .btn,
+      .page-title {
+        font-family: "Montserrat", sans-serif;
+        font-weight: 600;
+        line-height: 1.3;
+      }
+
+      h1 {
+        font-size: 2.25rem;
+        margin-bottom: 1.25rem;
+      }
+
+      h2 {
+        font-size: 1.75rem;
+        margin-bottom: 1rem;
+      }
+
+      h3 {
+        font-size: 1.5rem;
+        margin-bottom: 0.75rem;
+      }
+
+      h4 {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+      }
+
+      p {
+        margin-bottom: 1rem;
+      }
+
+      .nav-section-title {
+        font-family: "Montserrat", sans-serif;
+        font-weight: 500;
+      }
+
+      .form-label {
+        font-weight: 500;
+      }
+
+      .text-small {
+        font-size: 0.875rem;
+      }
+
+      .text-xs {
+        font-size: 0.75rem;
+      }
+
+      .container-fluid {
+        padding: 0;
+        overflow-x: hidden;
+        max-width: 100%;
+      }
+
+      .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: var(--sidebar-width);
+        background: #fff;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+        z-index: 1000;
+        transition: transform var(--transition-speed);
+      }
+
+      .main-content {
+        margin-left: var(--sidebar-width);
+        padding: 1.5rem;
+        min-height: 100vh;
+        width: calc(100% - var(--sidebar-width));
+        overflow-x: hidden;
+        transition: margin-left var(--transition-speed);
+      }
+
+      .brand-logo {
+        max-width: 120px;
+        padding: 1rem;
+        margin: 0 auto;
+        display: block;
+        transition: transform 0.2s;
+      }
+
+      .brand-logo:hover {
+        transform: scale(1.05);
+      }
+
+      .nav-section {
+        padding: 0.5rem 1rem;
+      }
+
+      .nav-section-title {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #adb5bd;
+        margin-bottom: 0.5rem;
+        padding-left: 0.5rem;
+      }
+
+      .nav-link {
+        color: var(--secondary-color);
+        padding: 0.6rem 1rem;
+        margin: 0.2rem 0.5rem;
+        border-radius: 8px;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+      }
+
+      .nav-link:hover {
+        background-color: rgba(156, 2, 2, 0.1);
+        color: var(--primary-color);
+        transform: translateX(5px);
+      }
+
+      .nav-link.active {
+        background-color: var(--primary-color);
+        color: white;
+        box-shadow: 0 2px 8px rgba(156, 2, 2, 0.2);
+      }
+
+      .nav-link i {
+        margin-right: 0.8rem;
+        width: 20px;
+        text-align: center;
+        font-size: 1.1rem;
+      }
+
+      .nav-divider {
+        height: 1px;
+        background-color: rgba(0, 0, 0, 0.05);
+        margin: 0.75rem 1rem;
+      }
+
+      .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      }
+
+      .page-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #212529;
+        margin: 0;
+      }
+
+      .page-actions {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .card {
+        border: none;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        max-width: 100%;
+        height: 100%;
+        background: #fff;
+        transition: transform 0.2s, box-shadow 0.2s;
+        margin-bottom: 1.5rem;
+      }
+
+      .card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.1);
+      }
+
+      .card-body {
+        padding: 1.25rem;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .card-header {
+        background-color: rgba(0, 0, 0, 0.02);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        padding: 1rem 1.25rem;
+        font-weight: 600;
+        color: #495057;
+      }
+
+      .editor-card .card-body {
+        height: 350px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .editor-card .form-group {
+        margin-bottom: 0.75rem;
+      }
+
+      .editor-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 0.75rem;
+      }
+
+      #editor {
+        width: 100%;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        transition: all 0.2s;
+        min-height: 150px;
+        flex-grow: 1;
+        resize: none;
+      }
+
+      #editor:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+      }
+
+      .info-card .card-body {
+        height: auto;
+        min-height: 350px;
+        display: flex;
+        flex-direction: column;
+        padding: 1.25rem;
+        overflow: visible;
+      }
+
+      .info-card .form-group {
+        margin-bottom: 0.75rem;
+        flex-shrink: 0;
+      }
+
+      .info-card .card-title {
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+        flex-shrink: 0;
+        font-weight: 600;
+        color: #333;
+      }
+
+      .info-card .form-text {
+        font-size: 0.75rem;
+        margin-top: 0.25rem;
+        color: var(--secondary-color);
+      }
+
+      .info-card .form-label {
+        margin-bottom: 0.25rem;
+        font-weight: 500;
+        color: #495057;
+      }
+
+      .info-card .submit-section {
+        margin-top: 1.5rem;
+        padding-top: 1rem;
+        flex-shrink: 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+        position: sticky;
+        bottom: 0;
+        background: white;
+        z-index: 10;
+      }
+
+      .btn-submit {
+        font-size: 1.1rem;
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+        box-shadow: 0 0.25rem 1rem rgba(13, 110, 253, 0.25);
+      }
+
+      .btn-submit:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 0.5rem 1.5rem rgba(13, 110, 253, 0.3);
+      }
+
+      .preview-card {
+        margin-top: 1rem;
+      }
+
+      .preview-card .card-body {
+        min-height: 150px;
+      }
+
+      #imagePreview img,
+      #videoPreview video {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 8px;
+        transition: transform 0.3s;
+      }
+
+      #imagePreview img:hover,
+      #videoPreview video:hover {
+        transform: scale(1.03);
+      }
+
+      .form-control,
+      .form-select {
+        border-radius: 8px;
+        padding: 0.6rem 0.75rem;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        transition: all 0.2s;
+        font-size: 0.95rem;
+      }
+
+      .form-control:focus,
+      .form-select:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+      }
+
+      .form-label {
+        font-weight: 500;
+        color: #495057;
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+      }
+
+      .btn {
+        border-radius: 8px;
+        padding: 0.6rem 1rem;
+        transition: all 0.2s;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+
+      .btn i {
+        font-size: 1.1rem;
+      }
+
+      .btn-primary {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+        box-shadow: 0 0.25rem 0.5rem rgba(156, 2, 2, 0.15);
+      }
+
+      .btn-primary:hover {
+        background-color: var(--primary-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 0.5rem 1rem rgba(156, 2, 2, 0.2);
+      }
+
+      .btn-primary:active,
+      .btn-primary.active {
+        background-color: #800000 !important;
+        border-color: #800000 !important;
+        box-shadow: 0 0.25rem 0.5rem rgba(156, 2, 2, 0.3) !important;
+        transform: translateY(0) !important;
+      }
+
+      .btn-outline-primary {
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+      }
+
+      .btn-outline-primary:hover {
+        background-color: var(--primary-color);
+        color: white;
+        transform: translateY(-2px);
+      }
+
+      .btn-outline-primary:active,
+      .btn-outline-primary.active {
+        background-color: #800000 !important;
+        border-color: #800000 !important;
+        color: white !important;
+        box-shadow: 0 0.25rem 0.5rem rgba(156, 2, 2, 0.3) !important;
+        transform: translateY(0) !important;
+      }
+
+      .btn-success {
+        box-shadow: 0 0.25rem 0.5rem rgba(25, 135, 84, 0.15);
+      }
+
+      .btn-success:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0.5rem 1rem rgba(25, 135, 84, 0.2);
+      }
+
+      .file-input-wrapper {
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+        width: 100%;
+      }
+
+      .file-input-wrapper input[type="file"] {
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+      }
+
+      .file-input-btn {
+        display: flex;
+        width: 100%;
+        background-color: #f8f9fa;
+        border: 1px dashed #ced4da;
+        border-radius: 8px;
+        padding: 1rem;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+
+      .file-input-btn:hover {
+        background-color: #e9ecef;
+        border-color: #adb5bd;
+      }
+
+      .file-input-btn i {
+        font-size: 1.25rem;
+        color: var(--secondary-color);
+      }
+
+      .preview-placeholder {
+        display: flex;
+        flex-direction: column;
+        height: 150px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        justify-content: center;
+        align-items: center;
+        color: var(--secondary-color);
+        border: 1px dashed #ced4da;
+        padding: 1rem;
+        text-align: center;
+      }
+
+      .preview-placeholder i {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        opacity: 0.5;
+      }
+
+      .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.9);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        backdrop-filter: blur(4px);
+      }
+
+      .loading-spinner {
+        width: 3rem;
+        height: 3rem;
+      }
+
+      .loading-message {
+        position: absolute;
+        bottom: calc(50% - 4rem);
+        font-size: 1rem;
+        color: var(--secondary-color);
+        font-weight: 500;
+      }
+
+      @media (max-width: 992px) {
+        .editor-card .card-body,
+        .info-card .card-body {
+          height: 300px;
+          min-height: 300px;
+        }
+
+        #editor {
+          height: 150px;
+        }
+
+        .sidebar {
+          transform: translateX(-100%);
+          transition: transform 0.3s ease;
+        }
+
+        .sidebar.show {
+          transform: translateX(0);
+        }
+
+        .main-content {
+          margin-left: 0;
+          width: 100%;
+        }
+
+        .toggle-sidebar {
+          display: block;
+        }
+
+        .col-lg-8,
+        .col-lg-4 {
+          padding: 0 0.5rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .editor-card .card-body,
+        .info-card .card-body {
+          height: 250px;
+        }
+      }
+
+      /* FAB chỉ hiển thị trên màn hình tablet và điện thoại */
+      .fab-container {
+        display: none;
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 1030;
+      }
+      
+      .fab-options {
+        position: absolute;
+        bottom: 70px;
+        right: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 15px;
+        transition: all 0.3s ease;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(20px);
+      }
+      
+      .fab-active .fab-options {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+      
+      .fab-option-item {
+        display: flex;
+        align-items: center;
+        background-color: white;
+        padding: 8px 16px;
+        border-radius: 30px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        color: var(--secondary-color);
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 14px;
+        transition: all 0.2s;
+      }
+      
+      .fab-option-item:hover {
+        background-color: #f8f9fa;
+        transform: translateX(-5px);
+        color: var(--primary-color);
+      }
+      
+      .fab-option-item i {
+        font-size: 18px;
+        margin-right: 8px;
+      }
+      
+      .btn-fab {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background-color: var(--primary-color);
+        color: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
+        z-index: 1031;
+      }
+      
+      .fab-active .btn-fab {
+        transform: rotate(45deg);
+        background-color: #800000;
+      }
+      
+      .btn-fab:hover {
+        transform: scale(1.1);
+        background-color: #800000;
+      }
+      
+      .fab-active .btn-fab:hover {
+        transform: scale(1.1) rotate(45deg);
+      }
+      
+      .btn-fab i {
+        font-size: 24px;
+      }
+      
+      /* Hiển thị FAB chỉ trên tablet và điện thoại */
+      @media (max-width: 992px) {
+        .fab-container {
+          display: block;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay">
+      <div class="spinner-border text-primary loading-spinner"></div>
+      <div class="loading-message">Đang xử lý...</div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        <!-- Sidebar -->
+        <div class="sidebar p-0">
+          <div class="d-flex flex-column h-100">
+            <div class="text-center py-4 mb-2">
+              <a href="index.html">
+                <img
+                  src="sun_images_home/logo_doc1.png"
+                  alt="Suncraft"
+                  class="brand-logo"
+                />
+              </a>
+            </div>
+
+            <div class="nav-section">
+              <div class="nav-section-title">QUẢN LÝ</div>
+              <ul class="nav flex-column">
+                <li class="nav-item">
+                  <a class="nav-link" href="Adm/Adm.html?from_admin=true#dashboard">
+                    <i class="bi bi-speedometer2"></i>
+                    Dashboard
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" href="admin.html">
+                    <i class="bi bi-file-earmark-plus"></i>
+                    Tạo bài viết
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    href="javascript:void(0)"
+                    onclick="showPostList()"
+                  >
+                    <i class="bi bi-file-text"></i>
+                    Quản lý bài viết
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav-divider"></div>
+
+            <div class="nav-section">
+              <div class="nav-section-title">HỆ THỐNG</div>
+              <ul class="nav flex-column">
+                <li class="nav-item">
+                  <a class="nav-link" href="index.html" target="_blank">
+                    <i class="bi bi-house"></i>
+                    Trang chủ
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-danger" href="javascript:void(0);" id="logoutLink">
+                    <i class="bi bi-box-arrow-right"></i>
+                    Đăng xuất
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+          <!-- New Post Form -->
+          <div id="newPostForm" class="container-fluid">
+            <div class="page-header">
+              <h1 class="page-title">Tạo bài viết mới</h1>
+              <div class="page-actions">
+                <button
+                  class="btn btn-outline-primary me-2"
+                  id="togglePostList"
+                >
+                  <i class="bi bi-list-ul me-1"></i> Danh sách bài viết
+                </button>
+                <button
+                  class="btn btn-outline-primary d-md-none"
+                  id="toggleSidebar"
+                >
+                  <i class="bi bi-list"></i>
+                </button>
+              </div>
+            </div>
+
+            <form id="postForm" onsubmit="submitPost(event)">
+              <div class="row g-4">
+                <div class="col-lg-6">
+                  <div class="card editor-card mb-4">
+                    <div class="card-header">Nội dung bài viết</div>
+                    <div class="card-body">
+                      <div class="form-group">
+                        <label class="form-label fw-bold" for="postTitle"
+                          >Tiêu đề</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control form-control-lg"
+                          id="postTitle"
+                          name="title"
+                          required
+                          placeholder="Nhập tiêu đề bài viết"
+                          onkeyup="updateSlugPreview()"
+                        />
+                        <div class="d-flex mt-2 align-items-center">
+                          <div
+                            id="urlPreview"
+                            class="text-muted small"
+                            style="flex-grow: 1"
+                          >
+                            <span class="text-secondary">Đường dẫn: </span>
+                            <span class="fw-medium" id="siteUrl"
+                              >../bai-viet/</span
+                            >
+                            <span id="slugPreview" class="text-primary"></span>
+                          </div>
+                          <button
+                            type="button"
+                            class="btn btn-sm btn-outline-secondary ms-2"
+                            id="toggleSlugEdit"
+                          >
+                            <i class="bi bi-pencil-square"></i> Sửa slug
+                          </button>
+                        </div>
+                        <div
+                          id="slugEditContainer"
+                          class="mt-2"
+                          style="display: none"
+                        >
+                          <div class="input-group">
+                            <span class="input-group-text text-muted"
+                              >../bai-viet/</span
+                            >
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="postSlug"
+                              name="slug"
+                              placeholder="slug-tu-dong"
+                              aria-label="Slug"
+                              onkeyup="validateSlug(this.value)"
+                            />
+                          </div>
+                          <div class="form-text text-muted">
+                            <i class="bi bi-info-circle"></i> Chỉ sử dụng chữ
+                            cái, số và dấu gạch ngang. Slug sẽ được dùng trong
+                            URL.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group flex-grow-1">
+                        <label class="form-label fw-bold">Nội dung</label>
+                        <div class="editor-container">
+                          <textarea
+                            id="editor"
+                            name="content"
+                            class="form-control"
+                            style="min-height: 150px; resize: vertical"
+                            placeholder="Viết nội dung bài viết ở đây..."
+                          ></textarea>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-6">
+                  <div class="card info-card">
+                    <div class="card-header">Thông tin bài viết</div>
+                    <div class="card-body">
+                      <h5 class="card-title">Thông tin bài viết</h5>
+                      <div class="form-group">
+                        <label class="form-label" for="postImage"
+                          >Hình ảnh bài viết</label
+                        >
+                        <input
+                          type="file"
+                          class="form-control"
+                          id="postImage"
+                          name="image"
+                          accept="image/*"
+                        />
+                        <div id="imagePreview" class="mt-3 d-none">
+                          <img
+                            src=""
+                            alt="Preview"
+                            class="img-fluid rounded"
+                            style="max-height: 200px"
+                          />
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="form-label" for="postVideo">Video</label>
+                        <input
+                          type="file"
+                          class="form-control"
+                          id="postVideo"
+                          name="video"
+                          accept="video/*"
+                        />
+                        <div class="form-text">
+                          Hỗ trợ: MP4, WebM (tối đa 50MB)
+                        </div>
+                      </div>
+                      <div class="submit-section">
+                        <button
+                          type="submit"
+                          class="btn btn-primary w-100 btn-submit"
+                        >
+                          <i class="bi bi-cloud-upload"></i>
+                          <span>Đăng bài</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <!-- Post List Section -->
+          <div
+            id="postListSection"
+            class="container-fluid"
+            style="display: none"
+          >
+            <div class="page-header">
+              <h1 class="page-title">Quản lý bài viết</h1>
+              <div class="page-actions">
+                <button
+                  class="btn btn-outline-primary d-md-none"
+                  id="toggleSidebar2"
+                >
+                  <i class="bi bi-list"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="card mb-4">
+              <div
+                class="card-header d-flex justify-content-between align-items-center"
+              >
+                <div>Danh sách bài viết</div>
+                <div>
+                  <div class="input-group" style="width: 250px">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="postSearchInput"
+                      placeholder="Tìm kiếm bài viết..."
+                    />
+                    <button
+                      class="btn btn-outline-secondary"
+                      type="button"
+                      id="postSearchBtn"
+                    >
+                      <i class="bi bi-search"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="table table-hover mb-0">
+                    <thead class="bg-light">
+                      <tr>
+                        <th class="border-0" style="width: 50%">TIÊU ĐỀ</th>
+                        <th class="border-0" style="width: 20%">NGÀY TẠO</th>
+                        <th class="border-0 text-center" style="width: 15%">
+                          LƯỢT XEM
+                        </th>
+                        <th class="border-0 text-center" style="width: 15%">
+                          THAO TÁC
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody id="postListTable">
+                      <tr>
+                        <td colspan="5" class="text-center py-4">
+                          <div
+                            class="spinner-border spinner-border-sm text-primary"
+                            role="status"
+                          >
+                            <span class="visually-hidden">Đang tải...</span>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="card-footer bg-light">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="text-muted small">
+                    Hiển thị <span id="postCountDisplay">0</span> bài viết
+                  </div>
+                  <nav aria-label="Post navigation">
+                    <ul
+                      class="pagination pagination-sm mb-0"
+                      id="postPagination"
+                    >
+                      <!-- Pagination will be generated here -->
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal xác nhận xóa bài viết -->
+    <div
+      class="modal fade"
+      id="deletePostConfirmModal"
+      tabindex="-1"
+      aria-labelledby="deletePostConfirmModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div
+            class="modal-header"
+            style="background-color: #9c0202; color: white"
+          >
+            <h5 class="modal-title" id="deletePostConfirmModalLabel">
+              Xác nhận xóa bài viết
+            </h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="text-center mb-4">
+              <i
+                class="bi bi-exclamation-triangle"
+                style="font-size: 4rem; color: #dc3545"
+              ></i>
+            </div>
+            <p class="text-center fs-5 mb-1">
+              Bạn có chắc chắn muốn xóa bài viết này?
+            </p>
+            <p class="text-center text-muted mb-0">
+              Hành động này không thể hoàn tác.
+            </p>
+            <div class="d-flex justify-content-center mt-3">
+              <span class="fw-bold" id="postTitleToDelete"></span>
+            </div>
+            <input type="hidden" id="postIdToDelete" value="" />
+          </div>
+          <div class="modal-footer justify-content-center">
+            <button
+              type="button"
+              class="btn btn-outline-secondary px-4"
+              data-bs-dismiss="modal"
+            >
+              <i class="bi bi-x-lg me-1"></i> Hủy bỏ
+            </button>
+            <button
+              type="button"
+              class="btn px-4"
+              style="background-color: var(--primary-color); color: white"
+              id="confirmDeletePostBtn"
+            >
+              <i class="bi bi-trash me-1"></i> Xác nhận xóa
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAB Button for tablets and mobile -->
+    <div class="fab-container">
+      <div class="fab-options">
+        <a href="Adm/Adm.html?from_admin=true#dashboard" class="fab-option-item" title="Dashboard">
+          <i class="bi bi-speedometer2"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="admin.html?tab=list" class="fab-option-item" title="Quản lí bài viết">
+          <i class="bi bi-file-earmark-text"></i>
+          <span>Quản lí bài viết</span>
+        </a>
+        <a href="index.html" class="fab-option-item" title="Trang chủ">
+          <i class="bi bi-house"></i>
+          <span>Trang chủ</span>
+        </a>
+      </div>
+      <button class="btn btn-fab" id="fabButton">
+        <i class="bi bi-plus"></i>
+      </button>
+    </div>
+
+    <script src="api-functions.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Hàm mới để hiển thị tab danh sách bài viết
+      function showPostList() {
+        document.getElementById("newPostForm").style.display = "none";
+        document.getElementById("postListSection").style.display = "block";
+        loadPostList();
+
+        // Cập nhật trạng thái active của menu
+        document.querySelectorAll(".nav-link").forEach((link) => {
+          link.classList.remove("active");
+        });
+        document
+          .querySelector('.nav-link[onclick="showPostList()"]')
+          .classList.add("active");
+      }
+
+      // Xử lý hiển thị/ẩn sidebar trên mobile
+      document
+        .getElementById("toggleSidebar")
+        ?.addEventListener("click", function () {
+          document.querySelector(".sidebar").classList.toggle("show");
+        });
+
+      document
+        .getElementById("toggleSidebar2")
+        ?.addEventListener("click", function () {
+          document.querySelector(".sidebar").classList.toggle("show");
+        });
+
+      // Chuyển đổi giữa tạo bài viết và quản lý bài viết
+      document
+        .getElementById("togglePostList")
+        ?.addEventListener("click", function () {
+          showPostList();
+        });
+
+      document
+        .getElementById("toggleNewPost")
+        ?.addEventListener("click", function () {
+          document.getElementById("postListSection").style.display = "none";
+          document.getElementById("newPostForm").style.display = "block";
+
+          // Cập nhật trạng thái active của menu
+          document.querySelectorAll(".nav-link").forEach((link) => {
+            link.classList.remove("active");
+          });
+          document
+            .querySelector('.nav-link[href="admin.html"]')
+            .classList.add("active");
+        });
+
+      // Biến lưu trữ trạng thái phân trang và tìm kiếm
+      let currentPage = 1;
+      let postsPerPage = 10;
+      let totalPosts = 0;
+      let searchTerm = "";
+
+      // Tìm kiếm bài viết
+      document
+        .getElementById("postSearchBtn")
+        ?.addEventListener("click", function () {
+          searchTerm = document.getElementById("postSearchInput").value.trim();
+          currentPage = 1;
+          loadPostList();
+        });
+
+      // Tham số từ URL - dùng cho chỉnh sửa bài viết
+      function getUrlParams() {
+        const params = {};
+        new URLSearchParams(window.location.search).forEach((value, key) => {
+          params[key] = value;
+        });
+        return params;
+      }
+
+      let quill;
+      const loadingOverlay = document.querySelector(".loading-overlay");
+
+      function showLoading() {
+        loadingOverlay.style.display = "flex";
+      }
+
+      function hideLoading() {
+        loadingOverlay.style.display = "none";
+      }
+
+      // Cờ debug để bỏ qua kiểm tra phiên đăng nhập (chỉ dùng cho môi trường phát triển)
+      const DEBUG_MODE = false; // Đặt thành false trong môi trường sản xuất
+      
+      async function checkSession() {
+        showLoading();
+        try {
+          const response = await fetch(`${baseApiUrl}/check-auth.php`, {
+            method: "GET",
+            credentials: "include",
+            mode: "cors",
+            headers: {
+              Accept: "application/json",
+            },
+          });
+          
+          console.log("Kết quả kiểm tra session:", response.status);
+          
+          if (!response.ok) {
+            if (response.status === 404) {
+              throw new Error("API endpoint không tồn tại. Kiểm tra cấu hình máy chủ web.");
+            } else {
+              throw new Error("Lỗi kết nối máy chủ: " + response.status);
+            }
+          }
+          
+          const data = await response.json();
+          console.log("Dữ liệu đăng nhập:", data);
+          
+          if (!data.isLoggedIn && !data.logged_in) {
+            console.log("Phiên đăng nhập không hợp lệ hoặc đã hết hạn");
+            // Luôn sử dụng đường dẫn đầy đủ của suncraft
+            window.location.href = "/suncraft/Adm/log-in.html";
+            return false;
+          }
+          
+          return true;
+        } catch (error) {
+          console.error("Lỗi kiểm tra session:", error);
+          alert("Không thể kết nối đến máy chủ: " + error.message);
+          return false;
+        } finally {
+          hideLoading();
+        }
+      }
+
+      // Hàm retry khi gặp lỗi kết nối
+      async function retryOperation(operation, maxRetries = 3) {
+        for (let i = 0; i < maxRetries; i++) {
+          try {
+            return await operation();
+          } catch (error) {
+            if (i === maxRetries - 1) throw error;
+            await new Promise((resolve) => setTimeout(resolve, 1000 * (i + 1)));
+          }
+        }
+      }
+
+      // Preview hình ảnh và video
+      document
+        .getElementById("postImage")
+        .addEventListener("change", function (e) {
+          const file = e.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              const preview = document.getElementById("imagePreview");
+              preview.querySelector("img").src = e.target.result;
+              preview.classList.remove("d-none");
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+
+      document
+        .getElementById("postVideo")
+        .addEventListener("change", function (e) {
+          const file = e.target.files[0];
+          if (file) {
+            const url = URL.createObjectURL(file);
+            const preview = document.getElementById("videoPreview");
+            preview.querySelector("video source").src = url;
+            preview.querySelector("video").load();
+            preview.classList.remove("d-none");
+          }
+        });
+
+      // Thêm biến để lưu trữ tất cả bài viết
+      let allPosts = [];
+
+      // Tải danh sách bài viết
+      async function loadPostList(resetPage = false) {
+        if (resetPage) {
+          currentPage = 1;
+        }
+
+          showLoading();
+
+        try {
+          // Tạo URL cho API với các tham số
+          let url = `${baseApiUrl}/posts.php`;
+          const params = new URLSearchParams();
+          params.append("page", currentPage);
+          params.append("limit", postsPerPage);
+
+          // Kiểm tra phần tử searchPostInput tồn tại trước khi truy cập value
+          const searchInput = document.getElementById("postSearchInput");
+          const searchTerm = searchInput ? searchInput.value : "";
+          if (searchTerm) {
+            params.append("search", searchTerm);
+          }
+
+          url = `${url}?${params.toString()}`;
+
+          // Gọi API
+          const response = await fetch(url, {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+            },
+            credentials: "include",
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          // Lấy dữ liệu từ API
+          const responseData = await response.json();
+          
+          // Kiểm tra xem dữ liệu có đúng cấu trúc không
+          let postsList = [];
+          
+          if (responseData && Array.isArray(responseData)) {
+            // Nếu API trả về mảng trực tiếp
+            postsList = responseData;
+          } else if (responseData && Array.isArray(responseData.posts)) {
+            // Nếu API trả về đối tượng với thuộc tính posts
+            postsList = responseData.posts;
+            
+            // Cập nhật thông tin phân trang từ API nếu có
+            if (responseData.pagination) {
+              totalPosts = responseData.pagination.total_items || postsList.length;
+              currentPage = responseData.pagination.current_page || currentPage;
+            }
+          } else {
+            // Trường hợp không xác định được cấu trúc
+            console.warn("Cấu trúc API không như mong đợi:", responseData);
+            postsList = [];
+          }
+          
+          // Lưu trữ tất cả bài viết để có thể sử dụng sau này
+          allPosts = postsList;
+          
+          // Nếu không có phân trang từ API, tự xử lý ở client
+          if (!responseData.pagination) {
+            totalPosts = postsList.length;
+          }
+
+          // Lọc theo từ khóa tìm kiếm nếu có và không có phân trang từ server
+          let filteredPosts = postsList;
+
+          if (searchTerm && !responseData.pagination) {
+            const searchLower = searchTerm.toLowerCase();
+            filteredPosts = filteredPosts.filter(
+              (post) =>
+                post.title.toLowerCase().includes(searchLower) ||
+                (post.content && post.content.toLowerCase().includes(searchLower))
+            );
+          }
+
+          // Tính toán phân trang trên client nếu cần
+          let paginatedPosts = filteredPosts;
+          
+          if (!responseData.pagination) {
+          const startIndex = (currentPage - 1) * postsPerPage;
+          const endIndex = startIndex + postsPerPage;
+            paginatedPosts = filteredPosts.slice(startIndex, endIndex);
+          }
+
+          // Hiển thị số lượng bài viết
+          document.getElementById("postCountDisplay").textContent =
+            responseData.pagination ? responseData.pagination.total_items : filteredPosts.length;
+
+          // Cập nhật bảng danh sách bài viết
+          const tbody = document.getElementById("postListTable");
+
+          if (paginatedPosts.length === 0) {
+            tbody.innerHTML = `
+                        <tr>
+                            <td colspan="5" class="text-center py-4">
+                                <div class="text-muted">
+                                    <i class="bi bi-journal-x fs-2 mb-2 d-block"></i>
+                                    <p class="mb-2">Không tìm thấy bài viết nào</p>
+                                    <button class="btn btn-sm btn-outline-primary" onclick="document.getElementById('toggleNewPost').click()">
+                                        <i class="bi bi-plus-circle me-1"></i>Tạo bài viết mới
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+          } else {
+            tbody.innerHTML = paginatedPosts
+              .map(
+                (post, index) => `
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    ${
+                                      post.image_path
+                                        ? `<img src="${post.image_path}" alt="${post.title}" class="img-thumbnail me-3" style="width: 60px; height: 40px; object-fit: cover;">`
+                                        : `<div class="bg-light d-flex align-items-center justify-content-center me-3" style="width: 60px; height: 40px;">
+                                            <i class="bi bi-file-earmark-text text-muted"></i>
+                                        </div>`
+                                    }
+                                    <div>
+                                        <div class="fw-medium">
+                                            <a href="javascript:void(0)" onclick="setCurrentPost(${
+                                              post.id
+                                            })" class="text-primary">
+                                                ${post.title}
+                                            </a>
+                                        </div>
+                                        <small class="text-muted">bai-viet/${
+                                          post.slug
+                                        }</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>${new Date(post.created_at).toLocaleDateString(
+                              "vi-VN"
+                            )}</td>
+                            <td class="text-center">
+                                <span class="badge bg-light text-dark">${
+                                  post.views || 0
+                                } lượt</span>
+                            </td>
+                            <td class="text-center">
+                                <div class="btn-group">
+                                    <button class="btn btn-sm btn-outline-primary" onclick="editPost(${
+                                      post.id
+                                    })" title="Chỉnh sửa">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger" onclick="showDeletePostModal(${
+                                      post.id
+                                    }, '${post.title.replace(
+                  /'/g,
+                  "\\'"
+                )}')" title="Xóa">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `
+              )
+              .join("");
+          }
+
+          // Cập nhật phân trang 
+          if (responseData.pagination) {
+            // Sử dụng thông tin phân trang từ API
+            totalPosts = responseData.pagination.total_items;
+          } else {
+            // Tự tính toán phân trang
+          totalPosts = filteredPosts.length;
+          }
+          
+          updatePagination();
+        } catch (error) {
+          console.error("Lỗi tải danh sách bài viết:", error);
+          document.getElementById("postListTable").innerHTML = `
+                    <tr>
+                        <td colspan="5" class="text-center py-4">
+                            <div class="text-danger">
+                                <i class="bi bi-exclamation-circle fs-2 mb-2 d-block"></i>
+                                <p class="mb-2">Có lỗi xảy ra khi tải dữ liệu: ${error.message}</p>
+                                <button class="btn btn-sm btn-outline-primary" onclick="loadPostList()">
+                                    <i class="bi bi-arrow-clockwise me-1"></i>Thử lại
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+        } finally {
+          hideLoading();
+        }
+      }
+
+      // Cập nhật phân trang
+      function updatePagination() {
+        const pagination = document.getElementById("postPagination");
+        const totalPages = Math.ceil(totalPosts / postsPerPage);
+
+        if (totalPages <= 1) {
+          pagination.innerHTML = "";
+          return;
+        }
+
+        let paginationHTML = "";
+
+        // Nút Previous
+        paginationHTML += `
+                <li class="page-item ${currentPage === 1 ? "disabled" : ""}">
+                    <a class="page-link" href="#" aria-label="Previous" onclick="changePage(${
+                      currentPage - 1
+                    }); return false;">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            `;
+
+        // Các trang
+        const maxVisiblePages = 5;
+        let startPage = Math.max(
+          1,
+          currentPage - Math.floor(maxVisiblePages / 2)
+        );
+        let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+        if (endPage - startPage + 1 < maxVisiblePages) {
+          startPage = Math.max(1, endPage - maxVisiblePages + 1);
+        }
+
+        for (let i = startPage; i <= endPage; i++) {
+          paginationHTML += `
+                    <li class="page-item ${i === currentPage ? "active" : ""}">
+                        <a class="page-link" href="#" onclick="changePage(${i}); return false;">${i}</a>
+                    </li>
+                `;
+        }
+
+        // Nút Next
+        paginationHTML += `
+                <li class="page-item ${
+                  currentPage === totalPages ? "disabled" : ""
+                }">
+                    <a class="page-link" href="#" aria-label="Next" onclick="changePage(${
+                      currentPage + 1
+                    }); return false;">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            `;
+
+        pagination.innerHTML = paginationHTML;
+      }
+
+      // Đổi trang
+      function changePage(page) {
+        if (page < 1 || page > Math.ceil(totalPosts / postsPerPage)) {
+          return;
+        }
+        currentPage = page;
+        loadPostList();
+      }
+
+      // Hiển thị modal xác nhận xóa bài viết
+      function showDeletePostModal(id, title) {
+        document.getElementById("postIdToDelete").value = id;
+        document.getElementById("postTitleToDelete").textContent = title;
+        const deleteModal = new bootstrap.Modal(
+          document.getElementById("deletePostConfirmModal")
+        );
+        deleteModal.show();
+      }
+
+      // Xóa bài viết
+      async function deletePost() {
+        const postId = document.getElementById("postIdToDelete").value;
+        if (!postId) return;
+
+        try {
+          showLoading();
+
+          const response = await fetch(`${baseApiUrl}/posts/${postId}`, {
+            method: "DELETE",
+            credentials: "include",
+            mode: "cors",
+            headers: {
+              Accept: "application/json",
+            },
+          });
+
+          if (!response.ok) {
+            throw new Error("Không thể xóa bài viết");
+          }
+
+          // Đóng modal
+          const deleteModal = bootstrap.Modal.getInstance(
+            document.getElementById("deletePostConfirmModal")
+          );
+          deleteModal.hide();
+
+          // Thông báo thành công
+          createToast("success", "Xóa bài viết thành công!", 3000);
+
+          // Tải lại danh sách bài viết
+          loadPostList();
+        } catch (error) {
+          console.error("Lỗi xóa bài viết:", error);
+          createToast(
+            "danger",
+            `Có lỗi xảy ra khi xóa bài viết: ${error.message}`,
+            5000
+          );
+        } finally {
+          hideLoading();
+        }
+      }
+
+      // Kết nối nút xác nhận xóa trong modal
+      document
+        .getElementById("confirmDeletePostBtn")
+        ?.addEventListener("click", deletePost);
+
+      // Tải bài viết cần chỉnh sửa
+      async function loadPostForEdit(postId) {
+        try {
+          showLoading();
+          const response = await fetch(`${baseApiUrl}/posts.php/${postId}`, {
+            credentials: "include",
+          });
+
+          if (!response.ok) {
+            throw new Error(`Error ${response.status}: ${response.statusText}`);
+          }
+
+          const post = await response.json();
+
+          // Điền thông tin vào form
+          document.getElementById("postTitle").value = post.title;
+          document.getElementById("editor").value = post.content;
+
+          // Cập nhật UI
+          document.querySelector(".page-title").textContent =
+            "Chỉnh sửa bài viết";
+          const submitButton = document.querySelector('button[type="submit"]');
+          if (submitButton) {
+            submitButton.innerHTML =
+              '<i class="bi bi-save"></i><span>Cập nhật bài viết</span>';
+          }
+
+          // Thêm ID bài viết vào form để xác định đây là chỉnh sửa
+          const postIdInput = document.createElement("input");
+          postIdInput.type = "hidden";
+          postIdInput.name = "post_id";
+          postIdInput.value = postId;
+          document.getElementById("postForm").appendChild(postIdInput);
+        } catch (error) {
+          console.error("Lỗi tải bài viết:", error);
+          alert("Không thể tải bài viết. Vui lòng thử lại sau.");
+        } finally {
+          hideLoading();
+        }
+      }
+
+      // Xử lý gửi form
+      async function submitPost(event) {
+        event.preventDefault();
+
+        try {
+          showLoading();
+
+          // Thu thập dữ liệu form
+          const form = document.getElementById("postForm");
+          
+          // Tạo object dữ liệu thay vì FormData
+          const postData = {
+            title: document.getElementById("postTitle").value,
+            content: document.getElementById("editor").value,
+            category_id: ""  // Để trống nếu không có danh mục
+          };
+
+          // Chỉ thêm slug nếu người dùng đã nhập
+          const slugInput = document.getElementById("postSlug");
+          if (slugInput && slugInput.value) {
+            postData.slug = slugInput.value;
+          }
+
+          // Xử lý hình ảnh riêng nếu cần
+          const imageInput = document.getElementById("postImage");
+          if (imageInput && imageInput.files.length > 0) {
+            // Xử lý upload riêng và lấy đường dẫn
+            const imgResult = await uploadImage(imageInput.files[0]);
+            if (imgResult && imgResult.success) {
+              postData.image_path = imgResult.file.url;
+            }
+          }
+
+          // Xử lý video riêng nếu cần
+          const videoInput = document.getElementById("postVideo");
+          if (videoInput && videoInput.files.length > 0) {
+            // Xử lý upload riêng và lấy đường dẫn
+            const videoResult = await uploadVideo(videoInput.files[0]);
+            if (videoResult && videoResult.success) {
+              postData.video_path = videoResult.file.url;
+            }
+          }
+
+          // Kiểm tra dữ liệu bắt buộc
+          if (!postData.title || !postData.content) {
+            alert("Vui lòng nhập tiêu đề và nội dung bài viết!");
+            hideLoading();
+            return;
+          }
+
+          // Kiểm tra nếu đang chỉnh sửa bài viết
+          const postId = document.getElementById("postId")?.value;
+          const isEditing = !!postId;
+
+          // URL và method phụ thuộc vào việc đang tạo mới hay chỉnh sửa
+          const url = isEditing ? `${baseApiUrl}/posts.php/${postId}` : `${baseApiUrl}/posts.php`;
+          const method = isEditing ? "PUT" : "POST";
+
+          console.log("Gửi dữ liệu bài viết:", postData);
+          console.log("URL API:", url);
+          console.log("Method:", method);
+
+          // Gửi request dạng JSON thay vì FormData
+          const response = await fetch(url, {
+            method: method,
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify(postData),
+            credentials: "include"
+          });
+
+          // Kiểm tra và log response
+          console.log("Status code:", response.status);
+          console.log("Status text:", response.statusText);
+          
+          // Lấy dữ liệu response dưới dạng text trước
+          const responseText = await response.text();
+          console.log("Response text:", responseText);
+          
+          // Parse JSON nếu có thể
+          let result;
+          try {
+            result = JSON.parse(responseText);
+            console.log("Parsed response:", result);
+          } catch (e) {
+            console.error("Cannot parse response as JSON:", e);
+            throw new Error("Định dạng phản hồi không hợp lệ");
+          }
+
+          if (!response.ok) {
+            throw new Error(result.message || result.error || "Lỗi khi lưu bài viết");
+          }
+
+          // API trả về dữ liệu thành công
+          if (result.success) {
+            // Hiển thị thông báo thành công
+            const successMessage = isEditing
+              ? `Cập nhật bài viết thành công!`
+              : `Đăng bài viết thành công!`;
+            createToast("success", successMessage, 5000);
+
+            // Nếu đang chỉnh sửa, chuyển về trang quản lý sau 1.5 giây
+            if (isEditing) {
+              setTimeout(() => {
+                window.location.href = "Adm/Adm.html";
+              }, 1500);
+            } else {
+              // Reset form
+              form.reset();
+              
+              // Clear previews
+              const imagePreview = document.getElementById("imagePreview");
+              if (imagePreview) {
+                imagePreview.classList.add("d-none");
+                const img = imagePreview.querySelector("img");
+                if (img) img.src = "";
+              }
+
+              // Khôi phục trạng thái ban đầu của editor
+              if (quill) {
+                quill.root.innerHTML = "";
+              }
+            }
+          } else {
+            throw new Error(result.message || "Lỗi không xác định");
+          }
+        } catch (error) {
+          console.error("Lỗi khi xử lý bài viết:", error);
+          // Hiển thị thông báo lỗi với toast notification
+          createToast(
+            "danger",
+            `Lỗi khi xử lý bài viết: ${error.message || "Vui lòng thử lại sau."}`,
+            5000
+          );
+        } finally {
+          hideLoading();
+        }
+      }
+
+      // Hàm upload ảnh
+      async function uploadImage(file) {
+        const formData = new FormData();
+        formData.append('file', file);
+        
+        try {
+          const response = await fetch(`${baseApiUrl}/upload.php`, {
+            method: 'POST',
+            body: formData,
+            credentials: 'include'
+          });
+          
+          if (!response.ok) {
+            throw new Error('Upload ảnh thất bại');
+          }
+          
+          return await response.json();
+        } catch (error) {
+          console.error('Lỗi upload ảnh:', error);
+          return null;
+        }
+      }
+
+      // Hàm upload video
+      async function uploadVideo(file) {
+        const formData = new FormData();
+        formData.append('file', file);
+        
+        try {
+          const response = await fetch(`${baseApiUrl}/upload.php`, {
+            method: 'POST',
+            body: formData,
+            credentials: 'include'
+          });
+          
+          if (!response.ok) {
+            throw new Error('Upload video thất bại');
+          }
+          
+          return await response.json();
+        } catch (error) {
+          console.error('Lỗi upload video:', error);
+          return null;
+        }
+      }
+
+      // Hàm xử lý slug
+      function slugify(text) {
+        // Chuyển về chữ thường, bỏ dấu tiếng Việt
+        let slug = text
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .replace(/đ/g, "d")
+          .replace(/Đ/g, "d");
+
+        // Thay thế các ký tự không phải chữ cái, số bằng dấu gạch ngang
+        slug = slug
+          .replace(/[^\w\s-]/g, "")
+          .replace(/[\s_]+/g, "-")
+          .replace(/^-+|-+$/g, "");
+
+        return slug;
+      }
+
+      // Cập nhật slug preview khi nhập tiêu đề
+      function updateSlugPreview() {
+        const title = document.getElementById("postTitle").value;
+        const slugPreview = document.getElementById("slugPreview");
+        const postSlug = document.getElementById("postSlug");
+
+        if (title) {
+          const slug = slugify(title);
+          slugPreview.textContent = slug;
+
+          // Cập nhật trường slug nếu trường đó rỗng hoặc chưa được sửa thủ công
+          if (postSlug && (!postSlug.value || !postSlug.dataset.edited)) {
+            postSlug.value = slug;
+          }
+        } else {
+          slugPreview.textContent = "";
+          if (postSlug) postSlug.value = "";
+        }
+      }
+
+      // Kiểm tra tính hợp lệ của slug
+      function validateSlug(value) {
+        const slugInput = document.getElementById("postSlug");
+        slugInput.dataset.edited = "true";
+
+        // Loại bỏ các ký tự không hợp lệ ngay khi nhập
+        const validSlug = value
+          .toLowerCase()
+          .replace(/[^a-z0-9-]/g, "-")
+          .replace(/-+/g, "-")
+          .replace(/^-+|-+$/g, "");
+
+        if (validSlug !== value) {
+          slugInput.value = validSlug;
+        }
+      }
+
+      // Sau khi trang đã load
+      document.addEventListener("DOMContentLoaded", function () {
+        // Thêm event listener cho nút toggle slug edit
+        const toggleBtn = document.getElementById("toggleSlugEdit");
+        if (toggleBtn) {
+          toggleBtn.addEventListener("click", function () {
+            const container = document.getElementById("slugEditContainer");
+
+            if (container.style.display === "none") {
+              container.style.display = "block";
+              toggleBtn.innerHTML = '<i class="bi bi-x-lg"></i> Ẩn';
+              toggleBtn.classList.replace(
+                "btn-outline-secondary",
+                "btn-outline-primary"
+              );
+
+              // Đảm bảo slug field được điền
+              const slugPreview =
+                document.getElementById("slugPreview").textContent;
+              const slugInput = document.getElementById("postSlug");
+              if (slugPreview && !slugInput.value) {
+                slugInput.value = slugPreview;
+              }
+            } else {
+              container.style.display = "none";
+              toggleBtn.innerHTML =
+                '<i class="bi bi-pencil-square"></i> Sửa slug';
+              toggleBtn.classList.replace(
+                "btn-outline-primary",
+                "btn-outline-secondary"
+              );
+            }
+          });
+        }
+
+        // Cập nhật slug ban đầu
+        updateSlugPreview();
+      });
+
+      // Load bài viết cần chỉnh sửa khi load trang
+      async function loadPostOnPageLoad() {
+        const params = getUrlParams();
+        if (params.edit) {
+          await loadPostForEdit(params.edit);
+        }
+      }
+
+      // Load danh mục và bài viết cần chỉnh sửa khi load trang
+      async function onPageLoad() {
+        if (await checkSession()) {
+          await loadPostOnPageLoad();
+
+          // Kiểm tra nếu có tham số tab=list trong URL, hiển thị danh sách bài viết
+          const params = getUrlParams();
+          if (params.tab === "list") {
+            document.getElementById("togglePostList").click();
+          }
+        }
+      }
+
+      onPageLoad();
+
+      // Hàm để đặt bài viết hiện tại vào session và chuyển hướng đến trang blog
+      function setCurrentPost(postId) {
+        let posts = allPosts.filter((post) => post.id === postId);
+        if (posts.length > 0) {
+          let post = posts[0];
+          $.ajax({
+            url: "/suncraft/api/session.php/set_current_post",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ post: post }),
+            success: function () {
+              // Chuyển hướng đến trang blog
+              window.location.href = "/suncraft/blog.html";
+            },
+            error: function (xhr, status, error) {
+              showAlert(
+                "Không thể đặt bài viết hiện tại. Lỗi: " + error,
+                "danger"
+              );
+            },
+          });
+        }
+      }
+
+      // Hàm chỉnh sửa bài viết
+      function editPost(postId) {
+        // Chuyển hướng đến trang chỉnh sửa bài viết với tham số edit=postId
+        window.location.href = `admin.html?edit=${postId}`;
+      }
+    </script>
+
+    <!-- Toast Container -->
+    <div
+      class="toast-container position-fixed bottom-0 end-0 p-3"
+      id="toastContainer"
+    >
+      <!-- Toasts will be dynamically added here -->
+    </div>
+
+    <script>
+      // Hàm tạo toast notification
+      function createToast(type = "success", message, delay = 3000) {
+        // Lấy container hoặc tạo mới nếu chưa có
+        let container = document.getElementById("toastContainer");
+        if (!container) {
+          container = document.createElement("div");
+          container.id = "toastContainer";
+          container.className =
+            "toast-container position-fixed bottom-0 end-0 p-3";
+          document.body.appendChild(container);
+        }
+
+        // Tạo ID duy nhất cho toast
+        const toastId = "toast-" + Date.now();
+
+        // Xác định màu sắc và biểu tượng dựa vào loại thông báo
+        let bgColor, icon;
+        switch (type) {
+          case "success":
+            bgColor = "#198754";
+            icon = "bi-check-circle-fill";
+            break;
+          case "danger":
+          case "error":
+            bgColor = "#dc3545";
+            icon = "bi-exclamation-triangle-fill";
+            break;
+          case "warning":
+            bgColor = "#ffc107";
+            icon = "bi-exclamation-circle-fill";
+            break;
+          case "info":
+            bgColor = "#0dcaf0";
+            icon = "bi-info-circle-fill";
+            break;
+          case "primary":
+            bgColor = "#9c0202"; // Primary color theo thiết kế
+            icon = "bi-bell-fill";
+            break;
+          default:
+            bgColor = "#6c757d";
+            icon = "bi-bell";
+        }
+
+        // Tạo phần tử toast
+        const toastEl = document.createElement("div");
+        toastEl.id = toastId;
+        toastEl.className = "toast custom-toast";
+        toastEl.setAttribute("role", "alert");
+        toastEl.setAttribute("aria-live", "assertive");
+        toastEl.setAttribute("aria-atomic", "true");
+
+        // Nội dung HTML của toast
+        toastEl.innerHTML = `
+                <div class="toast-header" style="background-color: ${bgColor}; color: white;">
+                    <i class="bi ${icon} me-2"></i>
+                    <strong class="me-auto">${
+                      type === "success"
+                        ? "Thành công"
+                        : type === "danger" || type === "error"
+                        ? "Lỗi"
+                        : type === "warning"
+                        ? "Cảnh báo"
+                        : type === "info"
+                        ? "Thông tin"
+                        : "Thông báo"
+                    }</strong>
+                    <small>${new Date().toLocaleTimeString()}</small>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    ${message}
+                </div>
+            `;
+
+        // Thêm CSS inline cho hiệu ứng
+        toastEl.style.cssText = `
+                opacity: 0;
+                transform: translateX(30px);
+                transition: all 0.3s ease-in-out;
+                margin-bottom: 10px;
+                border-left: 5px solid ${bgColor};
+                box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+                max-width: 400px;
+                font-family: 'Noto Sans', sans-serif;
+            `;
+
+        // Thêm toast vào container
+        container.appendChild(toastEl);
+
+        // Kích hoạt hiệu ứng xuất hiện sau khi thêm vào DOM
+        setTimeout(() => {
+          toastEl.style.opacity = "1";
+          toastEl.style.transform = "translateX(0)";
+        }, 10);
+
+        // Khởi tạo toast Bootstrap
+        const toast = new bootstrap.Toast(toastEl, { delay: delay });
+        toast.show();
+
+        // Thêm hiệu ứng khi ẩn toast
+        toastEl.addEventListener("hide.bs.toast", function () {
+          toastEl.style.opacity = "0";
+          toastEl.style.transform = "translateX(30px)";
+        });
+
+        // Xóa phần tử khỏi DOM sau khi ẩn
+        toastEl.addEventListener("hidden.bs.toast", function () {
+          if (toastEl.parentNode) {
+            toastEl.parentNode.removeChild(toastEl);
+          }
+        });
+
+        return { toastId, toast };
+      }
+    </script>
+    <script src="Adm/adminRpsv.js"></script>
+    <script src="Adm/admin-responsive-fixes.js"></script>
+    <script src="Adm/logout.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        // Thêm listener cho nút FAB
+        document.getElementById("fabButton").addEventListener("click", function() {
+          // Chuyển đổi trạng thái hiển thị của FAB options
+          document.querySelector('.fab-container').classList.toggle('fab-active');
+        });
+      });
+    </script>
+    
+    <!-- Thêm phần tử loading toàn cục -->
+    <div id="globalLoading" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: center;">
+      <div class="spinner-border text-light" role="status">
+        <span class="visually-hidden">Đang tải...</span>
+      </div>
+    </div>
+  </body>
+</html>
+

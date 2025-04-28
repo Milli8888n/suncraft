@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liên hệ - Suncraft</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="icon" type="image/x-icon" href="./sun_images_home/logo_doc1.png">
+    <!-- Google Translate -->
+    <script type="text/javascript">
+        // Hàm thiết lập cookie
+        function setCookie(name, value, days) {
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/";
+        }
+
+        // Hàm lấy giá trị cookie
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        // Hàm chuyển đổi ngôn ngữ
+        function switchLanguage() {
+            console.log("Đang chuyển đổi ngôn ngữ...");
+            var lang = getCookie('googtrans');
+            console.log("Cookie hiện tại: " + lang);
+            
+            if (!lang || lang === '/vi/vi' || lang === '/auto/vi') {
+                // Chuyển sang tiếng Anh
+                console.log("Chuyển sang tiếng Anh");
+                setCookie('googtrans', '/vi/en', 1);
+                location.reload();
+            } else {
+                // Chuyển về tiếng Việt
+                console.log("Chuyển về tiếng Việt");
+                setCookie('googtrans', '/vi/vi', 1);
+                location.reload();
+            }
+        }
+        
+        // Hàm khởi tạo Google Translate
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'vi',
+                includedLanguages: 'en,vi',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+
+            // Kiểm tra cookie và cập nhật nút ngôn ngữ
+            var lang = getCookie('googtrans');
+            var langButton = document.getElementById('language-toggle');
+            if (langButton) {
+                if (lang === '/vi/en') {
+                    langButton.textContent = 'VI';
+                } else {
+                    langButton.textContent = 'EN';
+                }
+            }
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <style>
+        /* Điều chỉnh navbar bám dính */
+        .sticky-top {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1030;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        /* Thêm padding vào body để tránh nội dung bị che khuất bởi navbar cố định */
+        body {
+            padding-top: 85px;
+        }
+        
+        .navbar-compact {
+            padding-top: 0.25rem;
+            padding-bottom: 0.25rem;
+            margin-top: 0;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+        }
+        .navbar-compact .navbar-brand {
+            padding: 0;
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+        .navbar-compact .navbar-brand img {
+            width: 75px;
+            height: 70px;
+            margin-top: 0;
+            margin-bottom: 0;
+            object-fit: contain;
+        }
+        .navbar-compact .nav-link {
+            padding-top: 0.25rem !important;
+            padding-bottom: 0.25rem !important;
+            font-size: 0.9rem;
+        }
+        .navbar-compact .navbar-nav {
+            gap: 0.4rem;
+        }
+        .navbar-compact .btn-link {
+            padding: 0.25rem;
+        }
+        .navbar-compact .btn-outline-primary {
+            padding: 0.25rem 0.75rem;
+            font-size: 0.9rem;
+        }
+        
+        /* Điều chỉnh vị trí logo trên màn hình nhỏ */
+        @media (max-width: 991.98px) {
+            .navbar > .container {
+                position: relative;
+            }
+            .navbar-brand {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                margin: 0 !important;
+                z-index: 1;
+                height: 60px;
+                display: flex;
+                align-items: center;
+                overflow: hidden;
+            }
+            .navbar-brand img {
+                max-height: 55px;
+                width: auto;
+                object-fit: contain;
+            }
+            .navbar-toggler {
+                display: none; /* Ẩn nút hamburger */
+            }
+            .navbar-collapse {
+                display: none !important; /* Ẩn dropdown menu */
+            }
+        }
+        
+        /* CSS để ẩn phần tử Google Translate */
+        #google_translate_element {
+            display: none;
+        }
+        
+        /* Ẩn thanh công cụ bản dịch Google */
+        .goog-te-banner-frame {
+            display: none !important;
+        }
+        
+        body {
+            top: 0 !important;
+        }
+
+        /* Ẩn thanh Google Translate */
+        .skiptranslate.goog-te-gadget,
+        .goog-te-banner-frame {
+            display: none !important;
+        }
+        
+        body {
+            top: 0 !important;
+        }
+        
+        /* CSS để căn chỉnh các phần tử trong trang */
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        
+        section, .container, .row {
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .section-padding {
+            padding: 5rem 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .section-padding .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .card {
+            height: 100%;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .card p {
+            flex-grow: 1;
+        }
+        
+        /* Đảm bảo hình ảnh không bị tràn */
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        /* Căn chỉnh cho bản đồ Google Maps */
+        .map-container {
+            width: 100%;
+            height: auto;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+        
+        .map-container iframe {
+            width: 100%;
+            height: 450px;
+            border: 0;
+            display: block;
+            max-width: 1000px;
+        }
+        
+        @media (max-width: 768px) {
+            .map-container iframe {
+                height: 350px;
+            }
+        }
+        
+        /* Căn chỉnh form đăng ký */
+        .footer-subscribe-form {
+            margin: 0 auto;
+            max-width: 100%;
+        }
+        
+        /* Căn chỉnh mobile */
+        @media (max-width: 992px) {
+            .section-padding {
+                padding: 3rem 0;
+            }
+            
+            .container {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+        }
+        
+        /* Floating Action Button (FAB) */
+        .fab-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1040;
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: flex-end;
+        }
+        
+        .fab-main {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: #900202;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .fab-main:hover {
+            background: #a72020;
+            transform: scale(1.05);
+        }
+        
+        .fab-main i {
+            font-size: 1.2rem;
+        }
+        
+        .fab-menu {
+            position: absolute;
+            bottom: 80px;
+            right: 12px;
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            overflow: hidden;
+        }
+        
+        .fab-menu.active {
+            display: flex;
+        }
+        
+        .fab-item {
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            transform: translateY(20px);
+            opacity: 0;
+        }
+        
+        .fab-menu.active .fab-item {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .fab-menu.active .fab-item:nth-child(1) { transition-delay: 0.1s; }
+        .fab-menu.active .fab-item:nth-child(2) { transition-delay: 0.2s; }
+        .fab-menu.active .fab-item:nth-child(3) { transition-delay: 0.3s; }
+        .fab-menu.active .fab-item:nth-child(4) { transition-delay: 0.4s; }
+        .fab-menu.active .fab-item:nth-child(5) { transition-delay: 0.5s; }
+        
+        .fab-item-label {
+            display: none; /* Ẩn nhãn */
+        }
+        
+        .fab-item-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #900202;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .fab-item-button i {
+            font-size: 0.9rem;
+        }
+        
+        .fab-item-button:hover {
+            background: #900202;
+            color: white;
+            transform: scale(1.05);
+        }
+        
+        /* CSS cho các thiết bị nhỏ */
+        @media (min-width: 992px) {
+            .fab-container {
+                display: none; /* Ẩn FAB trên thiết bị lớn */
+            }
+        }
+        
+        /* Đảm bảo FAB hiển thị luôn trên thiết bị di động */
+        @media (max-width: 991.98px) {
+            .fab-container {
+                display: flex !important;
+            }
+        }
+        
+        /* Đảm bảo padding-top cho section contact header */
+        .contact-header-section {
+            padding-top: 120px !important;
+            margin-top: 0 !important;
+        }
+        
+        /* Ẩn phần tử Google Translate */
+        .goog-te-banner-frame.skiptranslate,
+        .goog-te-gadget-icon,
+        .goog-te-menu-value span {
+            display: none !important;
+        }
+        
+        .goog-te-gadget-simple {
+            background-color: transparent !important;
+            border: none !important;
+            padding: 0 !important;
+            font-size: 0 !important;
+            line-height: 0 !important;
+        }
+        
+        #google_translate_element {
+            position: absolute;
+            top: -1000px;
+            opacity: 0;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+        }
+        
+        body {
+            top: 0 !important;
+        }
+        
+        .skiptranslate {
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="google_translate_element"></div>
+    <!-- Header -->
+    <header class="sticky-top">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom navbar-compact">
+            <div class="container">
+                <!-- Mobile Search and Cart -->
+                <div class="d-flex d-lg-none align-items-center me-2">
+                    <a href="#" class="btn btn-link text-primary me-1" id="mobileSearchBtn">
+                        <i class="bi bi-search"></i>
+                    </a>
+                </div>
+                
+                <!-- Logo Center -->
+                <a class="navbar-brand mx-auto d-flex justify-content-center" href="index.html">
+                    <img src="./sun_images_home/logo_doc1.png" alt="Suncraft logo" style="width:75px;height:70px;">
+                </a>
+                
+                <!-- Ẩn nút hamburger trên mobile -->
+                <button class="navbar-toggler d-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <!-- Giữ nguyên menu desktop -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Trang chủ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="sanpham.html">Sản phẩm</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="lienket.html">Liên kết</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="blog.html">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="lien_he.html">Liên hệ</a>
+                        </li>
+                    </ul>
+                    <div class="d-none d-lg-flex align-items-center">
+                        <a href="#" class="btn btn-link text-primary me-2" id="desktopSearchBtn">
+                            <i class="bi bi-search"></i>
+                        </a>
+                        <a href="./Adm/log-in.html" class="btn btn-link text-primary me-2">
+                            <i class="bi bi-person"></i>
+                        </a>
+                        <a href="#" class="btn btn-outline-primary d-none d-md-block" id="language-toggle">
+                            EN
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- Search Bar (Hidden by default) -->
+        <div class="search-container bg-white py-3 border-bottom" style="display: none;">
+            <div class="container">
+                <form action="#" method="get" class="search-form">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm..." aria-label="Tìm kiếm">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="bi bi-search"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary ms-2 search-close">
+                            <i class="bi bi-x-lg"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </header>
+
+    <!-- FAB (Floating Action Button) -->
+    <div class="fab-container">
+        <div class="fab-main" id="fab-toggle">
+            <i class="bi bi-list fs-4"></i>
+        </div>
+        <div class="fab-menu" id="fab-menu">
+            <div class="fab-item">
+                <div class="fab-item-label">Trang chủ</div>
+                <a href="index.html" class="fab-item-button" title="Trang chủ">
+                    <i class="bi bi-house"></i>
+                </a>
+            </div>
+            <div class="fab-item">
+                <div class="fab-item-label">Sản phẩm</div>
+                <a href="sanpham.html" class="fab-item-button" title="Sản phẩm">
+                    <i class="bi bi-box"></i>
+                </a>
+            </div>
+            <div class="fab-item">
+                <div class="fab-item-label">Liên kết</div>
+                <a href="lienket.html" class="fab-item-button" title="Liên kết">
+                    <i class="bi bi-link"></i>
+                </a>
+            </div>
+            <div class="fab-item">
+                <div class="fab-item-label">Blog</div>
+                <a href="blog.html" class="fab-item-button" title="Blog">
+                    <i class="bi bi-journal-text"></i>
+                </a>
+            </div>
+            <div class="fab-item">
+                <div class="fab-item-label">Liên hệ</div>
+                <a href="lien_he.html" class="fab-item-button" title="Liên hệ">
+                    <i class="bi bi-chat"></i>
+                </a>
+            </div>
+            <div class="fab-item">
+                <div class="fab-item-label">Đăng nhập</div>
+                <a href="./Adm/log-in.html" class="fab-item-button" title="Đăng nhập">
+                    <i class="bi bi-person"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main style="margin-top: 0; padding-top: 0; position: relative; display: block; width: 100%;">
+        <!-- Contact Header -->
+        <section class="py-5 bg-light contact-header-section" style="margin-top: 0 !important; padding-top: 120px !important; position: relative; display: block; width: 100%;">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 text-center">
+                        <h1 class="serif-font fw-bold mb-3">Liên hệ</h1>
+                        <p class="lead text-muted">Chúng tôi luôn sẵn sàng lắng nghe và hỗ trợ bạn</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Information -->
+        <section class="section-padding">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-lg-6" data-aos="fade-right">
+                        <div class="contact-info p-4 p-md-5 bg-gold-light rounded shadow-sm">
+                            <h2 class="serif-font fw-bold section-title mb-4">Thông tin liên hệ</h2>
+                            <div class="mb-4">
+                                <h5 class="fw-bold mb-3">Công ty Cổ phần Doanh nghiệp xã hội Suncraft</h5>
+                                <div class="d-flex mb-3">
+                                    <i class="bi bi-geo-alt text-primary me-3 fs-5"></i>
+                                    <div>
+                                        <p class="mb-1">Văn phòng: tầng 15 tháp B toà nhà Sông Đà</p>
+                                        <p class="mb-0">Quận Nam Từ Liêm, Hà Nội</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex mb-3">
+                                    <i class="bi bi-envelope text-primary me-3 fs-5"></i>
+                                    <div>
+                                        <p class="mb-1">info@suncraft.vn</p>
+                                        <p class="mb-0">sale1@suncraft.vn</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex mb-3">
+                                    <i class="bi bi-telephone text-primary me-3 fs-5"></i>
+                                    <div>
+                                        <p class="mb-0">Hotline: +84 0963 5303 30</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex mb-3">
+                                    <i class="bi bi-clock text-primary me-3 fs-5"></i>
+                                    <div>
+                                        <p class="mb-1">Thứ Hai - Thứ Sáu: 8:00 - 17:30</p>
+                                        <p class="mb-0">Thứ Bảy: 8:00 - 12:00</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="social-links mt-4">
+                                <h5 class="fw-bold mb-3">Kết nối với chúng tôi</h5>
+                                <div class="d-flex gap-2">
+                                    <a href="https://www.facebook.com/share/1FVZwMHwFb/?mibextid=wwXIfr" class="btn btn-primary rounded-circle" target="_blank">
+                                        <i class="bi bi-facebook"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-primary rounded-circle">
+                                        <i class="bi bi-instagram"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-primary rounded-circle">
+                                        <i class="bi bi-twitter"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-primary rounded-circle">
+                                        <i class="bi bi-linkedin"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6" data-aos="fade-left">
+                        <div class="contact-form p-4 p-md-5 bg-white rounded shadow-sm">
+                            <h2 class="serif-font fw-bold section-title mb-4">Kết nối với chúng tôi</h2>
+                            <p class="text-muted mb-4">Hãy liên hệ với chúng tôi qua email, facebook, hay Zalo để có thông tin mới nhất về sản phẩm và chính sách giá bán đại lý</p>
+                            <form action="send_email.php" method="post" id="contactForm">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="name" name="name" placeholder="Họ và tên" required>
+                                            <label for="name">Họ và tên</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3">
+                                            <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                                            <label for="email">Email</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3">
+                                            <input type="tel" class="form-control" id="phone" name="phone" placeholder="Số điện thoại">
+                                            <label for="phone">Số điện thoại</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3">
+                                            <select class="form-select" id="subject" name="subject">
+                                                <option value="" selected disabled>Chọn chủ đề</option>
+                                                <option value="Thông tin sản phẩm">Thông tin sản phẩm</option>
+                                                <option value="Đặt hàng">Đặt hàng</option>
+                                                <option value="Hợp tác kinh doanh">Hợp tác kinh doanh</option>
+                                                <option value="Khác">Khác</option>
+                                            </select>
+                                            <label for="subject">Chủ đề</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-floating mb-3">
+                                            <textarea class="form-control" id="message" name="message" placeholder="Nội dung tin nhắn" style="height: 150px" required></textarea>
+                                            <label for="message">Nội dung tin nhắn</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" id="privacy" name="privacy" required>
+                                            <label class="form-check-label text-muted" for="privacy">
+                                                Tôi đồng ý với <a href="#" class="text-primary">chính sách bảo mật</a> của Suncraft
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-primary btn-lg">Gửi tin nhắn</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Map Section -->
+        <section class="section-padding bg-gold-light">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 text-center mb-5">
+                        <h2 class="serif-font fw-bold section-title">Vị trí của chúng tôi</h2>
+                        <p class="text-muted">Ghé thăm showroom của chúng tôi để trải nghiệm sản phẩm</p>
+                    </div>
+                </div>
+                <div class="map-container rounded shadow-sm overflow-hidden" data-aos="zoom-in">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.6793063246897!2d105.77057267531537!3d21.046592980503274!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab4cd0c66f05%3A0x77faa905dae3e9a3!2zMlE5SiszRiBOYW0gVOG7qyBMacOqbSwgSMOgIE7hu5lpLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1724892037089!5m2!1svi!2s" style="width:100%; height:450px; border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+                <div class="mt-4 text-center">
+                    <p class="mb-0"><strong>Địa chỉ:</strong> Tầng 15, Tháp B, Tòa nhà Sông Đà, Mỹ Đình, Nam Từ Liêm, Hà Nội</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="section-padding">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 text-center mb-5">
+                        <h2 class="serif-font fw-bold section-title">Câu hỏi thường gặp</h2>
+                        <p class="text-muted">Những thông tin hữu ích có thể bạn đang tìm kiếm</p>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="accordion" id="faqAccordion">
+                            <div class="accordion-item border mb-3 rounded shadow-sm">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        Làm thế nào để đặt hàng?
+                                    </button>
+                                </h2>
+                                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        Bạn có thể đặt hàng trực tiếp trên website của chúng tôi hoặc liên hệ qua số điện thoại hotline. Chúng tôi sẽ hỗ trợ bạn trong quá trình đặt hàng và thanh toán.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item border mb-3 rounded shadow-sm">
+                                <h2 class="accordion-header" id="headingTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        Chính sách bảo hành sản phẩm như thế nào?
+                                    </button>
+                                </h2>
+                                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        Sản phẩm của Suncraft được bảo hành và đổi trả nếu có sự cố hỏng hóc do lỗi bên sản xuất. Thời gian bảo hành tùy thuộc vào từng loại sản phẩm, thông thường là 12 tháng kể từ ngày mua hàng.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item border mb-3 rounded shadow-sm">
+                                <h2 class="accordion-header" id="headingThree">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        Phí vận chuyển được tính như thế nào?
+                                    </button>
+                                </h2>
+                                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        Phí vận chuyển được tính dựa trên khoảng cách và trọng lượng của sản phẩm. Đối với đơn hàng có giá trị từ 1.000.000đ trở lên, chúng tôi sẽ miễn phí vận chuyển trong nội thành Hà Nội và TP. Hồ Chí Minh.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item border mb-3 rounded shadow-sm">
+                                <h2 class="accordion-header" id="headingFour">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                        Làm thế nào để trở thành đại lý của Suncraft?
+                                    </button>
+                                </h2>
+                                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        Để trở thành đại lý của Suncraft, bạn cần liên hệ với chúng tôi qua email sale1@suncraft.vn hoặc số điện thoại hotline. Chúng tôi sẽ gửi cho bạn thông tin chi tiết về chính sách đại lý và các điều kiện hợp tác.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer Section -->
+        <footer class="bg-gold-light pt-5 pb-3">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-lg-4">
+                        <div class="footer-brand mb-3">
+                            <img src="./Suncraft_website_Inf/suncraft_logo/e6e59529-b1df-4676-a5b2-f3757e67957e.png" alt="Suncraft logo" style="width:120px;height:115px;">
+                        </div>
+                        <p class="mb-4">Suncraft - Nơi hội tụ tinh hoa nghề thủ công Việt Nam, kết nối các nghệ nhân tài hoa với những người yêu thích nghệ thuật truyền thống.</p>
+                        <div class="d-flex gap-3 mb-3">
+                            <a href="https://www.facebook.com/share/1FVZwMHwFb/?mibextid=wwXIfr" class="social-link">
+                                <i class="bi bi-facebook"></i>
+                            </a>
+                            <a href="#" class="social-link">
+                                <i class="bi bi-instagram"></i>
+                            </a>
+                            <a href="#" class="social-link">
+                                <i class="bi bi-youtube"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-6">
+                        <h5 class="footer-heading mb-3">Danh mục</h5>
+                        <ul class="footer-links">
+                            <li><a href="sanpham.html">Sơn mài</a></li>
+                            <li><a href="sanpham.html">Lụa tơ tằm</a></li>
+                            <li><a href="sanpham.html">Thổ cẩm</a></li>
+                            <li><a href="sanpham.html">Gốm sứ</a></li>
+                            <li><a href="sanpham.html">Đồ gỗ mỹ nghệ</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-2 col-md-6">
+                        <h5 class="footer-heading mb-3">Liên kết</h5>
+                        <ul class="footer-links">
+                            <li><a href="index.html">Trang chủ</a></li>
+                            <li><a href="blog.html">Blog</a></li>
+                            <li><a href="lienket.html">Liên kết</a></li>
+                            <li><a href="lien_he.html">Liên hệ</a></li>
+                            <li><a href="#">Chính sách bảo hành</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-4 col-md-12">
+                        <h5 class="footer-heading mb-3">Đăng ký nhận tin</h5>
+                        <p class="mb-3">Đăng ký để nhận thông tin về sản phẩm mới và khuyến mãi</p>
+                        <form class="footer-subscribe-form mb-3">
+                            <div class="input-group">
+                                <input type="email" class="form-control" placeholder="Email của bạn" aria-label="Email của bạn">
+                                <button class="btn btn-primary" type="submit">Đăng ký</button>
+                            </div>
+                        </form>
+                        <p class="small">Liên hệ: <a href="mailto:info@suncraft.vn">info@suncraft.vn</a></p>
+                    </div>
+                </div>
+                <hr class="mt-4 mb-3">
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-center text-md-start">
+                        <p class="small text-muted mb-md-0">© 2025 Suncraft. Tất cả quyền được bảo lưu.</p>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <ul class="list-inline mb-0 small">
+                            <li class="list-inline-item"><a href="#" class="text-muted">Điều khoản sử dụng</a></li>
+                            <li class="list-inline-item"><span class="text-muted">•</span></li>
+                            <li class="list-inline-item"><a href="#" class="text-muted">Chính sách bảo mật</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Custom JavaScript -->
+    <script>
+        // Initialize AOS animation
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true,
+            mirror: false
+        });
+
+        // FAB Menu Toggle - Sửa lại để hoạt động đúng
+        document.addEventListener('DOMContentLoaded', function() {
+            const fabToggle = document.getElementById('fab-toggle');
+            const fabMenu = document.getElementById('fab-menu');
+            
+            if (fabToggle && fabMenu) {
+                fabToggle.addEventListener('click', function(event) {
+                    event.stopPropagation(); // Ngăn sự kiện click lan ra ngoài
+                    fabMenu.classList.toggle('active');
+                    
+                    // Rotate icon when active
+                    if (fabMenu.classList.contains('active')) {
+                        this.innerHTML = '<i class="bi bi-x fs-4"></i>';
+                    } else {
+                        this.innerHTML = '<i class="bi bi-list fs-4"></i>';
+                    }
+                });
+                
+                // Close menu when clicking elsewhere
+                document.addEventListener('click', function(event) {
+                    if (!event.target.closest('.fab-container')) {
+                        fabMenu.classList.remove('active');
+                        fabToggle.innerHTML = '<i class="bi bi-list fs-4"></i>';
+                    }
+                });
+                
+                // Ngăn chặn sự kiện click trên các item không lan ra
+                const fabItems = document.querySelectorAll('.fab-item');
+                fabItems.forEach(item => {
+                    item.addEventListener('click', function(event) {
+                        event.stopPropagation();
+                    });
+                });
+            } else {
+                console.log('FAB elements not found');
+            }
+        });
+
+        // Form validation
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // Simple validation
+            let isValid = true;
+            const name = document.getElementById('name');
+            const email = document.getElementById('email');
+            const message = document.getElementById('message');
+            
+            if (!name.value.trim()) {
+                name.classList.add('is-invalid');
+                isValid = false;
+            } else {
+                name.classList.remove('is-invalid');
+            }
+            
+            if (!email.value.trim() || !email.value.includes('@')) {
+                email.classList.add('is-invalid');
+                isValid = false;
+            } else {
+                email.classList.remove('is-invalid');
+            }
+            
+            if (!message.value.trim()) {
+                message.classList.add('is-invalid');
+                isValid = false;
+            } else {
+                message.classList.remove('is-invalid');
+            }
+            
+            if (isValid) {
+                // Show success message
+                alert('Cảm ơn bạn đã liên hệ với chúng tôi. Chúng tôi sẽ phản hồi trong thời gian sớm nhất!');
+                
+                // Reset form
+                this.reset();
+                
+                // You could also submit the form to the server here
+                // this.submit();
+            }
+        });
+
+        // Search functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchContainer = document.querySelector('.search-container');
+            const desktopSearchBtn = document.getElementById('desktopSearchBtn');
+            const mobileSearchBtn = document.getElementById('mobileSearchBtn');
+            const searchCloseBtn = document.querySelector('.search-close');
+            
+            // Open search bar when search button is clicked
+            desktopSearchBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                searchContainer.style.display = 'block';
+                searchContainer.querySelector('input').focus();
+            });
+            
+            mobileSearchBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                searchContainer.style.display = 'block';
+                searchContainer.querySelector('input').focus();
+            });
+            
+            // Close search bar when close button is clicked
+            searchCloseBtn.addEventListener('click', function() {
+                searchContainer.style.display = 'none';
+            });
+            
+            // Handle search form submission
+            document.querySelector('.search-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const searchTerm = this.querySelector('input').value.trim();
+                if (searchTerm) {
+                    // Redirect to search results page with search term
+                    window.location.href = 'search.html?q=' + encodeURIComponent(searchTerm);
+                }
+            });
+        });
+
+        // Chức năng chuyển đổi ngôn ngữ
+        document.addEventListener('DOMContentLoaded', function() {
+            var languageToggle = document.getElementById('language-toggle');
+            if (languageToggle) {
+                languageToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log("Nút ngôn ngữ được nhấp");
+                    switchLanguage();
+                });
+                
+                // Cập nhật hiển thị nút dựa trên ngôn ngữ hiện tại
+                var lang = getCookie('googtrans');
+                if (lang === '/vi/en') {
+                    languageToggle.textContent = 'VI';
+                } else {
+                    languageToggle.textContent = 'EN';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

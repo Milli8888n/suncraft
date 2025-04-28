@@ -1,0 +1,1326 @@
+    <!DOCTYPE html>
+    <html lang="vi">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Suncraft - Thủ công mỹ nghệ Việt Nam</title>
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Bootstrap Icons -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+        <!-- AOS Animation -->
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="./styles.css">
+        <link rel="icon" type="image/x-icon" href="./sun_images_home/logo_doc1.png">
+        <!-- Google Translate -->
+        <script type="text/javascript">
+            // Hàm thiết lập cookie
+            function setCookie(name, value, days) {
+                var expires = "";
+                if (days) {
+                    var date = new Date();
+                    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                    expires = "; expires=" + date.toUTCString();
+                }
+                document.cookie = name + "=" + (value || "") + expires + "; path=/";
+            }
+
+            // Hàm lấy giá trị cookie
+            function getCookie(name) {
+                var nameEQ = name + "=";
+                var ca = document.cookie.split(';');
+                for (var i = 0; i < ca.length; i++) {
+                    var c = ca[i];
+                    while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+                }
+                return null;
+            }
+
+            // Hàm chuyển đổi ngôn ngữ
+            function switchLanguage() {
+                console.log("Đang chuyển đổi ngôn ngữ...");
+                var lang = getCookie('googtrans');
+                console.log("Cookie hiện tại: " + lang);
+                
+                if (!lang || lang === '/vi/vi' || lang === '/auto/vi') {
+                    // Chuyển sang tiếng Anh
+                    console.log("Chuyển sang tiếng Anh");
+                    setCookie('googtrans', '/vi/en', 1);
+                    location.reload();
+                } else {
+                    // Chuyển về tiếng Việt
+                    console.log("Chuyển về tiếng Việt");
+                    setCookie('googtrans', '/vi/vi', 1);
+                    location.reload();
+                }
+            }
+            
+            // Hàm khởi tạo Google Translate
+            function googleTranslateElementInit() {
+                new google.translate.TranslateElement({
+                    pageLanguage: 'vi',
+                    includedLanguages: 'en,vi',
+                    layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                    autoDisplay: false
+                }, 'google_translate_element');
+
+                // Kiểm tra cookie và cập nhật nút ngôn ngữ
+                var lang = getCookie('googtrans');
+                var langButton = document.getElementById('language-toggle');
+                if (langButton) {
+                    if (lang === '/vi/en') {
+                        langButton.textContent = 'VI';
+                    } else {
+                        langButton.textContent = 'EN';
+                    }
+                }
+            }
+        </script>
+        <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+        <style>
+            /* Ẩn phần tử Google Translate */
+            .goog-te-banner-frame.skiptranslate,
+            .goog-te-gadget-icon,
+            .goog-te-menu-value span {
+                display: none !important;
+            }
+            
+            .goog-te-gadget-simple {
+                background-color: transparent !important;
+                border: none !important;
+                padding: 0 !important;
+                font-size: 0 !important;
+                line-height: 0 !important;
+            }
+            
+            #google_translate_element {
+                position: absolute;
+                top: -1000px;
+                opacity: 0;
+                width: 1px;
+                height: 1px;
+                overflow: hidden;
+            }
+            
+            body {
+                top: 0 !important;
+            }
+            
+            .skiptranslate {
+                opacity: 0;
+            }
+            
+            /* Ẩn thanh công cụ bản dịch Google */
+            .goog-te-banner-frame {
+                display: none !important;
+            }
+            
+            body {
+                top: 0 !important;
+                padding-top: 70px;
+            }
+            
+            /* Điều chỉnh navbar bám dính */
+            .sticky-top {
+                position: fixed;
+                top: 0;
+                width: 100%;
+                z-index: 1030;
+                transition: all 0.3s ease;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+            
+            /* Thêm padding vào body để tránh nội dung bị che khuất bởi navbar cố định */
+            body {
+                padding-top: 70px;
+            }
+            
+            /* Điều chỉnh vị trí logo trên màn hình nhỏ */
+            @media (max-width: 991.98px) {
+                body {
+                    padding-top: 60px;
+                }
+                .navbar > .container {
+                    position: relative;
+                }
+                .navbar-brand {
+                    position: absolute;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    margin: 0 !important;
+                    z-index: 1;
+                    height: 60px;
+                    display: flex;
+                    align-items: center;
+                    overflow: hidden;
+                }
+                .navbar-brand img {
+                    max-height: 55px;
+                    width: auto;
+                    object-fit: contain;
+                }
+                .navbar-toggler {
+                    display: none; /* Ẩn nút hamburger */
+                }
+                .navbar-collapse {
+                    display: none !important; /* Ẩn dropdown menu */
+                }
+            }
+            
+            .navbar-compact {
+                padding-top: 0.25rem;
+                padding-bottom: 0.25rem;
+                margin-top: 0;
+                min-height: 60px;
+                display: flex;
+                align-items: center;
+            }
+            .navbar-compact .navbar-brand {
+                padding: 0;
+                display: flex;
+                align-items: center;
+                height: 100%;
+            }
+            .navbar-compact .navbar-brand img {
+                width: 75px;
+                height: 70px;
+                margin-top: 0;
+                margin-bottom: 0;
+                object-fit: contain;
+            }
+            .navbar-compact .nav-link {
+                padding-top: 0.25rem !important;
+                padding-bottom: 0.25rem !important;
+                font-size: 0.9rem;
+            }
+            .navbar-compact .navbar-nav {
+                gap: 0.4rem;
+            }
+            .navbar-compact .btn-link {
+                padding: 0.25rem;
+            }
+            .navbar-compact .btn-outline-primary {
+                padding: 0.25rem 0.75rem;
+                font-size: 0.9rem;
+            }
+            
+            /* Hiệu ứng hover cho nút Khám phá bộ sưu tập */
+            .custom-gold-btn {
+                background-color: #d4aa70 !important;
+                border-color: #d4aa70 !important;
+                font-weight: 600 !important;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
+                transition: all 0.3s ease !important;
+            }
+            
+            .custom-gold-btn:hover {
+                background-color: #e5c695 !important; /* Màu vàng nhạt hơn khi hover */
+                border-color: #e5c695 !important;
+                box-shadow: 0 4px 12px rgba(229, 198, 149, 0.5) !important; /* Bóng màu vàng nhạt */
+                transform: translateY(-2px) !important;
+            }
+            
+            /* Hiệu ứng hover cho nút Câu chuyện nghệ nhân */
+            .custom-outline-btn {
+                border-width: 2px !important;
+                font-weight: 600 !important;
+                text-shadow: 1px 1px 2px rgba(0,0,0,0.3) !important;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
+                transition: all 0.3s ease !important;
+            }
+            
+            .custom-outline-btn:hover {
+                color: #d4aa70 !important; /* Màu vàng gold khi hover */
+                background-color: rgba(255, 255, 255, 0.1) !important;
+                border-color: #d4aa70 !important;
+                box-shadow: 0 4px 12px rgba(229, 198, 149, 0.3) !important;
+                transform: translateY(-2px) !important;
+            }
+            
+            /* CSS cho hình ảnh trong testimonial */
+            .testimonial-avatar {
+                width: 50px;
+                height: 50px;
+                overflow: hidden;
+                border-radius: 50%;
+                flex-shrink: 0;
+            }
+            
+            .testimonial-avatar img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center;
+            }
+            
+            /* CSS cho card testimonial */
+            .testimonial-card {
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .testimonial-card .card-body {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+            }
+            
+            .testimonial-card .card-text {
+                flex-grow: 1;
+            }
+            
+            /* CSS cho phần thông tin người dùng */
+            .testimonial-card .d-flex.align-items-center {
+                margin-top: auto;
+            }
+            
+            /* Reset trang */
+            html {
+                overflow-x: hidden;
+            }
+            
+            body {
+                overflow-x: hidden;
+            }
+            
+            /* Sửa các phần tử có thanh cuộn dọc */
+            section {
+                overflow: visible !important;
+                height: auto !important;
+            }
+            
+            /* Giữ hero section đúng thiết kế */
+            .hero-section {
+                overflow: hidden !important;
+                min-height: 450px !important;
+                height: 80vh !important;
+                max-height: 750px !important;
+                position: relative !important;
+                display: flex !important;
+                align-items: center !important;
+                margin-top: 0 !important; /* Điều chỉnh khoảng cách với navbar */
+            }
+            
+            /* Sửa các phần tử con trong section */
+            .section-padding > .container,
+            .section-padding > .row,
+            .section-padding .col-md-4,
+            .section-padding .col-lg-6,
+            .section-padding .card {
+                overflow: visible !important;
+            }
+            
+            /* Thêm lớn phủ ẩn container */
+            .container:after {
+                content: "";
+                display: table;
+                clear: both;
+            }
+            
+            /* Căn chỉnh trung tâm các phần tử */
+            .container {
+                margin-left: auto !important;
+                margin-right: auto !important;
+                float: none !important;
+            }
+            
+            .row {
+                margin-left: auto !important;
+                margin-right: auto !important;
+                justify-content: center !important;
+            }
+            
+            /* Đảm bảo tất cả section đều được căn giữa */
+            section {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+                max-width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            /* Căn chỉnh cho các khu vực cụ thể bị lệch */
+            .section-padding .text-center,
+            .section-padding .text-md-start,
+            .section-padding .text-md-end {
+                width: 100%;
+                text-align: center !important;
+            }
+            
+            @media (min-width: 768px) {
+                .section-padding .text-md-start {
+                    text-align: left !important;
+                }
+                .section-padding .text-md-end {
+                    text-align: right !important;
+                }
+            }
+            
+            /* Floating Action Button (FAB) */
+            .fab-container {
+                position: fixed;
+                bottom: 30px;
+                right: 30px;
+                z-index: 1040;
+                display: flex;
+                flex-direction: column-reverse;
+                align-items: flex-end;
+            }
+            
+            .fab-main {
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                background: #900202;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            
+            .fab-main:hover {
+                background: #a72020;
+                transform: scale(1.1);
+            }
+            
+            .fab-menu {
+                position: absolute;
+                bottom: 80px;
+                right: 12px;
+                display: none;
+                flex-direction: column;
+                gap: 10px;
+                overflow: hidden;
+            }
+            
+            .fab-menu.active {
+                display: flex;
+            }
+            
+            .fab-item {
+                display: flex;
+                align-items: center;
+                transition: all 0.3s ease;
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            
+            .fab-menu.active .fab-item {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            
+            .fab-menu.active .fab-item:nth-child(1) { transition-delay: 0.1s; }
+            .fab-menu.active .fab-item:nth-child(2) { transition-delay: 0.2s; }
+            .fab-menu.active .fab-item:nth-child(3) { transition-delay: 0.3s; }
+            .fab-menu.active .fab-item:nth-child(4) { transition-delay: 0.4s; }
+            .fab-menu.active .fab-item:nth-child(5) { transition-delay: 0.5s; }
+            
+            .fab-item-label {
+                display: none; /* Ẩn nhãn */
+            }
+            
+            .fab-item-button {
+                width: 45px;
+                height: 45px;
+                border-radius: 50%;
+                background: #fff;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #900202;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+                transition: all 0.3s ease;
+            }
+            
+            .fab-item-button:hover {
+                background: #900202;
+                color: white;
+                transform: scale(1.1);
+            }
+            
+            /* CSS cho các thiết bị nhỏ - hiển thị FAB chỉ trên thiết bị nhỏ */
+            @media (min-width: 992px) {
+                .fab-container {
+                    display: none; /* Ẩn FAB trên thiết bị lớn */
+                }
+            }
+            
+            /* Đảm bảo FAB hiển thị luôn trên thiết bị di động */
+            @media (max-width: 991.98px) {
+                .fab-container {
+                    display: flex !important;
+                }
+            }
+
+            /* Section Styles */
+            .section-padding {
+                padding: 60px 0;
+                width: 100%;
+                overflow: visible !important;
+                height: auto !important;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .no-top-padding {
+                padding-top: 0;
+            }
+            
+            .full-width-container {
+                width: 100%;
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+            
+            .full-width {
+                width: 100vw;
+                position: relative;
+                left: 50%;
+                right: 50%;
+                margin-left: -50vw;
+                margin-right: -50vw;
+            }
+            
+            @media (max-width: 991.98px) {
+                .section-padding {
+                    padding: 40px 0;
+                }
+            }
+
+            /* Đảm bảo tất cả section đều được căn giữa */
+            section {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+                max-width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+                overflow: visible !important;
+                height: auto !important;
+            }
+
+            /* Đảm bảo container có chiều rộng đúng */
+            .container {
+                margin-left: auto !important;
+                margin-right: auto !important;
+                float: none !important;
+                max-width: 1200px;
+                width: 100%;
+            }
+            
+            /* Đảm bảo row không bị lệch */
+            .row {
+                width: 100%;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+                justify-content: center;
+            }
+
+            /* Footer Styles */
+            footer {
+                width: 100%;
+                overflow: hidden;
+            }
+            
+            footer.bg-gold-light {
+                background-color: #f9f5ea;
+            }
+            
+            .footer-brand img {
+                max-width: 100%;
+                height: auto;
+            }
+        </style>
+        
+        <!-- CSS sửa lỗi thanh cuộn - Phiên bản đơn giản -->
+        <style>
+            /* Reset trang */
+            html {
+                overflow-x: hidden;
+            }
+            
+            body {
+                overflow-x: hidden;
+            }
+            
+            /* Sửa các phần tử có thanh cuộn dọc */
+            section {
+                overflow: visible !important;
+                height: auto !important;
+            }
+            
+            /* Giữ hero section đúng thiết kế */
+            .hero-section {
+                overflow: hidden !important;
+                min-height: 500px !important;
+                height: 100vh !important;
+                max-height: 800px !important;
+                position: relative !important;
+                display: flex !important;
+                align-items: center !important;
+            }
+            
+            /* Sửa các phần tử con trong section */
+            .section-padding > .container,
+            .section-padding > .row,
+            .section-padding .col-md-4,
+            .section-padding .col-lg-6,
+            .section-padding .card {
+                overflow: visible !important;
+            }
+            
+            /* Thêm lớn phủ ẩn container */
+            .container:after {
+                content: "";
+                display: table;
+                clear: both;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="google_translate_element"></div>
+        <!-- Header -->
+        <header class="sticky-top">
+            <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom navbar-compact">
+                <div class="container">
+                    <!-- Mobile Search and Cart -->
+                    <div class="d-flex d-lg-none align-items-center me-2">
+                        <a href="#" class="btn btn-link text-primary me-1" id="mobileSearchBtn">
+                            <i class="bi bi-search"></i>
+                        </a>
+                    </div>
+                    
+                    <!-- Logo Center -->
+                    <a class="navbar-brand mx-auto d-flex justify-content-center" href="index.html">
+                        <img src="./sun_images_home/logo_doc1.png" alt="Suncraft logo" style="width:75px;height:70px;">
+                    </a>
+                    
+                    <!-- Ẩn nút hamburger trên mobile -->
+                    <button class="navbar-toggler d-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    
+                    <!-- Giữ nguyên menu desktop -->
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav mx-auto">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="index.html">Trang chủ</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="sanpham.html">
+                                    Sản phẩm
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="lienket.html">Liên kết</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="blog.html">Blog</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="lien_he.html">Liên hệ</a>
+                            </li>
+                        </ul>
+                        <div class="d-none d-lg-flex align-items-center">
+                            <a href="#" class="btn btn-link text-primary me-2" id="desktopSearchBtn">
+                                <i class="bi bi-search"></i>
+                            </a>
+                            <a href="Adm/log-in.html" class="btn btn-link text-primary me-2">
+                                <i class="bi bi-person"></i>
+                            </a>
+                            <a href="#" class="btn btn-outline-primary d-none d-md-block" id="language-toggle">
+                                EN
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            
+            <!-- Search Bar (Hidden by default) -->
+            <div class="search-container bg-white py-3 border-bottom" style="display: none;">
+                <div class="container">
+                    <form action="#" method="get" class="search-form">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm..." aria-label="Tìm kiếm">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="bi bi-search"></i>
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary ms-2 search-close">
+                                <i class="bi bi-x-lg"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </header>
+
+        <!-- FAB (Floating Action Button) -->
+        <div class="fab-container">
+            <div class="fab-main" id="fab-toggle">
+                <i class="bi bi-list fs-4"></i>
+            </div>
+            <div class="fab-menu" id="fab-menu">
+                <div class="fab-item">
+                    <div class="fab-item-label">Trang chủ</div>
+                    <a href="index.html" class="fab-item-button" title="Trang chủ">
+                        <i class="bi bi-house"></i>
+                    </a>
+                </div>
+                <div class="fab-item">
+                    <div class="fab-item-label">Sản phẩm</div>
+                    <a href="sanpham.html" class="fab-item-button" title="Sản phẩm">
+                        <i class="bi bi-box"></i>
+                    </a>
+                </div>
+                <div class="fab-item">
+                    <div class="fab-item-label">Liên kết</div>
+                    <a href="lienket.html" class="fab-item-button" title="Liên kết">
+                        <i class="bi bi-link"></i>
+                    </a>
+                </div>
+                <div class="fab-item">
+                    <div class="fab-item-label">Blog</div>
+                    <a href="blog.html" class="fab-item-button" title="Blog">
+                        <i class="bi bi-journal-text"></i>
+                    </a>
+                </div>
+                <div class="fab-item">
+                    <div class="fab-item-label">Liên hệ</div>
+                    <a href="lien_he.html" class="fab-item-button" title="Liên hệ">
+                        <i class="bi bi-chat"></i>
+                    </a>
+                </div>
+                <div class="fab-item">
+                    <div class="fab-item-label">Đăng nhập</div>
+                    <a href="./Adm/log-in.html" class="fab-item-button" title="Đăng nhập">
+                        <i class="bi bi-person"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <main style="margin-top: -10px;">
+            <!-- Hero Section -->
+            <section class="hero-section position-relative">
+                <div class="hero-overlay"></div>
+                <div class="container position-relative z-index-1 d-flex align-items-center justify-content-center h-100">
+                    <div class="row justify-content-center w-100">
+                        <div class="col-md-10 col-lg-8 text-center">
+                            <div class="hero-content mx-auto" style="max-width: 800px;">
+                                <h1 class="display-4 text-white fw-bold serif-font mb-3 mb-md-4" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.5); color: #d4aa70 !important;">Tinh hoa nghề thủ công Việt Nam</h1>
+                                <p class="lead text-white mb-3 mb-md-4" style="text-shadow: 1px 1px 3px rgba(0,0,0,0.5); color: #f5f5f5 !important;">Nơi hội tụ những tác phẩm nghệ thuật thủ công tinh xảo, kết tinh từ bàn tay khéo léo của các nghệ nhân Việt</p>
+                                <div class="d-flex flex-column flex-sm-row justify-content-center gap-responsive align-items-center">
+                                    <a href="blog.html" class="btn btn-outline-light btn-lg mb-2 mb-sm-0 custom-outline-btn">Câu chuyện nghệ nhân</a>
+                                    <a href="sanpham.html" class="btn btn-primary btn-lg custom-gold-btn">Khám phá bộ sưu tập <i class="bi bi-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <img src="./20250420_0308_Hoạ Tiết Việt Nam Tinh Tế_remix_01js7tjkstff29mvsk9nkk920f.png" alt="Nghệ thuật thủ công Việt Nam" class="hero-image">
+            </section>
+
+            <!-- Categories Section -->
+            <section class="section-padding position-relative no-top-padding">
+                <div class="decorative-pattern pattern-top-right"></div>
+                <div class="container full-width-container">
+                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4 mb-md-5">
+                        <div data-aos="fade-right">
+                            <h2 class="serif-font fw-bold section-title mb-2">Danh mục sản phẩm</h2>
+                            <p class="text-muted">Khám phá các loại hình nghệ thuật thủ công đặc sắc</p>
+                        </div>
+                        <a href="sanpham.html" class="link-primary d-flex align-items-center mt-2 mt-md-0" data-aos="fade-left">
+                            Xem tất cả
+                            <i class="bi bi-chevron-right ms-1"></i>
+                        </a>
+                    </div>
+                    <div class="row g-3 g-md-4">
+                        <div class="col-4 col-md-4 col-lg-2" data-aos="fade-up" data-aos-delay="100">
+                            <div class="category-card">
+                                <div class="category-overlay"></div>
+                                <img src="./images/Suncraft_anh-sp/tranh-sonmai.png" alt="Sơn mài" class="img-fluid">
+                                <div class="category-name">
+                                    <h3 class="serif-font text-white">Sơn mài</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4 col-md-4 col-lg-2" data-aos="fade-up" data-aos-delay="200">
+                            <div class="category-card">
+                                <div class="category-overlay"></div>
+                                <img src="./images/Suncraft_anh-sp/bat-trangtri-sonmai.png" alt="Gốm sứ" class="img-fluid">
+                                <div class="category-name">
+                                    <h3 class="serif-font text-white">Gốm sứ</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4 col-md-4 col-lg-2" data-aos="fade-up" data-aos-delay="300">
+                            <div class="category-card">
+                                <div class="category-overlay"></div>
+                                <img src="./images/Suncraft_anh-sp/Ngua-go.png" alt="Tượng gỗ" class="img-fluid">
+                                <div class="category-name">
+                                    <h3 class="serif-font text-white">Tượng gỗ</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4 col-md-4 col-lg-2" data-aos="fade-up" data-aos-delay="400">
+                            <div class="category-card">
+                                <div class="category-overlay"></div>
+                                <img src="./images/Suncraft_anh-sp/khan-trangtri-ban-thocam.png" alt="Thổ cẩm" class="img-fluid">
+                                <div class="category-name">
+                                    <h3 class="serif-font text-white">Thổ cẩm</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4 col-md-4 col-lg-2" data-aos="fade-up" data-aos-delay="500">
+                            <div class="category-card">
+                                <div class="category-overlay"></div>
+                                <img src="./images/Suncraft_anh-sp/khan-lua.png" alt="Lụa tơ tằm" class="img-fluid">
+                                <div class="category-name">
+                                    <h3 class="serif-font text-white">Lụa tơ tằm</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4 col-md-4 col-lg-2" data-aos="fade-up" data-aos-delay="600">
+                            <div class="category-card">
+                                <div class="category-overlay"></div>
+                                <img src="./images/Suncraft_anh-sp/khay-go.png" alt="Đồ gỗ" class="img-fluid">
+                                <div class="category-name">
+                                    <h3 class="serif-font text-white">Đồ gỗ</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Why Choose Us Section -->
+            <section class="section-padding bg-light full-width">
+                <div class="container full-width-container">
+                    <div class="text-center mb-5" data-aos="fade-up">
+                        <h2 class="serif-font fw-bold section-title d-inline-block">Tại sao chọn Suncraft</h2>
+                        <p class="text-muted mt-3">Những giá trị độc đáo mà chúng tôi mang lại</p>
+                    </div>
+                    <div class="row g-4">
+                        <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                            <div class="feature-card text-center p-4 h-100">
+                                <div class="feature-icon mb-3">
+                                    <i class="bi bi-award fs-1 text-primary"></i>
+                                </div>
+                                <h4 class="serif-font mb-3">Chất lượng đỉnh cao</h4>
+                                <p>Mỗi sản phẩm đều được làm thủ công tỉ mỉ, sử dụng nguyên liệu tự nhiên cao cấp và kỹ thuật truyền thống</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                            <div class="feature-card text-center p-4 h-100">
+                                <div class="feature-icon mb-3">
+                                    <i class="bi bi-people fs-1 text-primary"></i>
+                                </div>
+                                <h4 class="serif-font mb-3">Hỗ trợ cộng đồng</h4>
+                                <p>Mua sắm tại Suncraft là góp phần hỗ trợ các nghệ nhân và cộng đồng làng nghề truyền thống Việt Nam</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                            <div class="feature-card text-center p-4 h-100">
+                                <div class="feature-icon mb-3">
+                                    <i class="bi bi-gem fs-1 text-primary"></i>
+                                </div>
+                                <h4 class="serif-font mb-3">Độc đáo và sáng tạo</h4>
+                                <p>Sản phẩm của chúng tôi kết hợp giữa truyền thống và hiện đại, tạo nên những tác phẩm nghệ thuật độc đáo</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Artisan Story Section -->
+            <section class="section-padding position-relative">
+                <div class="decorative-pattern pattern-bottom-left"></div>
+                <div class="container full-width-container">
+                    <div class="row align-items-center g-4 g-lg-5">
+                        <div class="col-lg-6" data-aos="fade-right">
+                            <div class="position-relative">
+                                <img src="./images/image_about suncraft/1.jpg" alt="Nghệ nhân làng nghề" class="img-fluid rounded-3 shadow">
+                                <div class="decorative-box"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6" data-aos="fade-left">
+                            <h2 class="serif-font fw-bold section-title">Câu chuyện nghệ nhân</h2>
+                            <p class="lead mb-4">Mỗi sản phẩm thủ công đều mang trong mình câu chuyện về người nghệ nhân và di sản văn hóa Việt Nam</p>
+                            <p class="mb-4">Suncraft tự hào kết nối những người nghệ nhân tài hoa từ các làng nghề truyền thống trên khắp Việt Nam. Mỗi sản phẩm đều được tạo ra từ đôi bàn tay khéo léo, lưu giữ những kỹ thuật đã được truyền qua nhiều thế hệ.</p>
+                            <div class="d-flex align-items-center mb-4">
+                                <div class="me-4 text-center">
+                                    <span class="d-block display-6 fw-bold text-primary">50+</span>
+                                    <span class="text-muted">Nghệ nhân</span>
+                                </div>
+                                <div class="me-4 text-center">
+                                    <span class="d-block display-6 fw-bold text-primary">20+</span>
+                                    <span class="text-muted">Làng nghề</span>
+                                </div>
+                                <div class="text-center">
+                                    <span class="d-block display-6 fw-bold text-primary">100+</span>
+                                    <span class="text-muted">Sản phẩm</span>
+                                </div>
+                            </div>
+                            <a href="blog.html" class="btn btn-primary btn-lg">Khám phá thêm</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Process Section -->
+            <section class="section-padding position-relative">
+                <div class="decorative-pattern pattern-top-left"></div>
+                <div class="container full-width-container">
+                    <div class="text-center mb-5" data-aos="fade-up">
+                        <h2 class="serif-font fw-bold section-title d-inline-block">Quy trình sản xuất</h2>
+                        <p class="text-muted mt-3">Khám phá hành trình tạo ra những sản phẩm thủ công mỹ nghệ độc đáo</p>
+                    </div>
+                    <div class="row g-4">
+                        <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
+                            <div class="process-card text-center">
+                                <div class="process-icon mb-3">
+                                    <i class="bi bi-search fs-1 text-primary"></i>
+                                </div>
+                                <h4 class="serif-font mb-3">Tìm kiếm nguyên liệu</h4>
+                                <p>Chúng tôi lựa chọn những nguyên liệu tự nhiên, chất lượng cao từ các vùng miền Việt Nam</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
+                            <div class="process-card text-center">
+                                <div class="process-icon mb-3">
+                                    <i class="bi bi-tools fs-1 text-primary"></i>
+                                </div>
+                                <h4 class="serif-font mb-3">Chế tác thủ công</h4>
+                                <p>Các nghệ nhân tài hoa sử dụng kỹ thuật truyền thống kết hợp với sáng tạo hiện đại</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
+                            <div class="process-card text-center">
+                                <div class="process-icon mb-3">
+                                    <i class="bi bi-shield-check fs-1 text-primary"></i>
+                                </div>
+                                <h4 class="serif-font mb-3">Kiểm tra chất lượng</h4>
+                                <p>Mỗi sản phẩm đều trải qua quy trình kiểm tra nghiêm ngặt để đảm bảo chất lượng tốt nhất</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3" data-aos="fade-up" data-aos-delay="400">
+                            <div class="process-card text-center">
+                                <div class="process-icon mb-3">
+                                    <i class="bi bi-box-seam fs-1 text-primary"></i>
+                                </div>
+                                <h4 class="serif-font mb-3">Đóng gói và giao hàng</h4>
+                                <p>Sản phẩm được đóng gói cẩn thận và giao đến tay khách hàng trong tình trạng hoàn hảo</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Testimonials Section -->
+            <section class="section-padding bg-gold-light full-width">
+                <div class="container full-width-container">
+                    <div class="text-center mb-5" data-aos="fade-up">
+                        <h2 class="serif-font fw-bold section-title d-inline-block">Khách hàng nói gì về chúng tôi</h2>
+                        <p class="text-muted mt-3">Những đánh giá chân thực từ khách hàng đã trải nghiệm sản phẩm</p>
+                    </div>
+                    <div class="row g-4">
+                        <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                            <div class="card testimonial-card h-100 border-0 shadow-sm">
+                                <div class="card-body p-4">
+                                    <div class="d-flex mb-4">
+                                        <i class="bi bi-star-fill text-warning me-1"></i>
+                                        <i class="bi bi-star-fill text-warning me-1"></i>
+                                        <i class="bi bi-star-fill text-warning me-1"></i>
+                                        <i class="bi bi-star-fill text-warning me-1"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                    </div>
+                                    <p class="card-text mb-4">"Tôi vô cùng hài lòng với chiếc khăn lụa tơ tằm mua từ Suncraft. Chất lượng tuyệt vời, màu sắc rực rỡ và họa tiết tinh tế. Đây là món quà hoàn hảo cho bạn bè quốc tế."</p>
+                                    <div class="d-flex align-items-center">
+                                        <div class="testimonial-avatar me-3">
+                                            <img src="./Anh-58-copy-min.jpg" alt="Nguyễn Thị Minh" class="rounded-circle">
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-1">Nguyễn Thị Minh</h6>
+                                            <p class="text-muted small mb-0">Hà Nội</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                            <div class="card testimonial-card h-100 border-0 shadow-sm">
+                                <div class="card-body p-4">
+                                    <div class="d-flex mb-4">
+                                        <i class="bi bi-star-fill text-warning me-1"></i>
+                                        <i class="bi bi-star-fill text-warning me-1"></i>
+                                        <i class="bi bi-star-fill text-warning me-1"></i>
+                                        <i class="bi bi-star-fill text-warning me-1"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                    </div>
+                                    <p class="card-text mb-4">"Tranh sơn mài mà tôi mua từ Suncraft đã trở thành điểm nhấn trong phòng khách của tôi. Màu sắc và họa tiết truyền thống kết hợp với thiết kế hiện đại tạo nên một tác phẩm nghệ thuật đẹp mắt."</p>
+                                    <div class="d-flex align-items-center">
+                                        <div class="testimonial-avatar me-3">
+                                            <img src="anh-doanh-nhan-nu.jpg" alt="Trần Văn Nam" class="rounded-circle">
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-1">Trần Văn Nam</h6>
+                                            <p class="text-muted small mb-0">TP. Hồ Chí Minh</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                            <div class="card testimonial-card h-100 border-0 shadow-sm">
+                                <div class="card-body p-4">
+                                    <div class="d-flex mb-4">
+                                        <i class="bi bi-star-fill text-warning me-1"></i>
+                                        <i class="bi bi-star-fill text-warning me-1"></i>
+                                        <i class="bi bi-star-fill text-warning me-1"></i>
+                                        <i class="bi bi-star-fill text-warning me-1"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                    </div>
+                                    <p class="card-text mb-4">"Tôi rất ấn tượng với chất lượng sản phẩm thổ cẩm từ Suncraft. Mỗi sản phẩm đều mang đậm bản sắc văn hóa dân tộc và được làm thủ công tỉ mỉ. Dịch vụ khách hàng cũng rất chu đáo."</p>
+                                    <div class="d-flex align-items-center">
+                                        <div class="testimonial-avatar me-3">
+                                            <img src="./Anh-profile-56.jpg.webp" alt="Lê Thị Hương" class="rounded-circle">
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-1">Lê Thị Hương</h6>
+                                            <p class="text-muted small mb-0">Đà Nẵng</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer Section -->
+            <footer class="bg-gold-light pt-5 pb-3 full-width">
+                <div class="container full-width-container">
+                    <div class="row g-4">
+                        <div class="col-lg-4">
+                            <div class="footer-brand mb-3">
+                                <img src="./Suncraft_website_Inf/suncraft_logo/e6e59529-b1df-4676-a5b2-f3757e67957e.png" alt="Suncraft logo" style="width:120px;height:115px;">
+                            </div>
+                            <p class="mb-4">Suncraft - Nơi hội tụ tinh hoa nghề thủ công Việt Nam, kết nối các nghệ nhân tài hoa với những người yêu thích nghệ thuật truyền thống.</p>
+                            <div class="d-flex gap-3 mb-3">
+                                <a href="https://www.facebook.com/share/1FVZwMHwFb/?mibextid=wwXIfr" class="social-link">
+                                    <i class="bi bi-facebook"></i>
+                                </a>
+                                <a href="#" class="social-link">
+                                    <i class="bi bi-instagram"></i>
+                                </a>
+                                <a href="#" class="social-link">
+                                    <i class="bi bi-youtube"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-6">
+                            <h5 class="footer-heading mb-3">Danh mục</h5>
+                            <ul class="footer-links">
+                                <li><a href="sanpham.html">Sơn mài</a></li>
+                                <li><a href="sanpham.html">Lụa tơ tằm</a></li>
+                                <li><a href="sanpham.html">Thổ cẩm</a></li>
+                                <li><a href="sanpham.html">Gốm sứ</a></li>
+                                <li><a href="sanpham.html">Đồ gỗ mỹ nghệ</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-2 col-md-6">
+                            <h5 class="footer-heading mb-3">Liên kết</h5>
+                            <ul class="footer-links">
+                                <li><a href="index.html">Trang chủ</a></li>
+                                <li><a href="blog.html">Blog</a></li>
+                                <li><a href="lienket.html">Liên kết</a></li>
+                                <li><a href="lien_he.html">Liên hệ</a></li>
+                                <li><a href="#">Chính sách bảo hành</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-4 col-md-12">
+                            <h5 class="footer-heading mb-3">Đăng ký nhận tin</h5>
+                            <p class="mb-3">Đăng ký để nhận thông tin về sản phẩm mới và khuyến mãi</p>
+                            <form class="footer-subscribe-form mb-3">
+                                <div class="input-group">
+                                    <input type="email" class="form-control" placeholder="Email của bạn" aria-label="Email của bạn">
+                                    <button class="btn btn-primary" type="submit">Đăng ký</button>
+                                </div>
+                            </form>
+                            <p class="small">Liên hệ: <a href="mailto:info@suncraft.vn">info@suncraft.vn</a></p>
+                        </div>
+                    </div>
+                    <hr class="mt-4 mb-3">
+                    <div class="row align-items-center">
+                        <div class="col-md-6 text-center text-md-start">
+                            <p class="small text-muted mb-md-0">© 2025 Suncraft. Tất cả quyền được bảo lưu.</p>
+                        </div>
+                        <div class="col-md-6 text-center text-md-end">
+                            <ul class="list-inline mb-0 small">
+                                <li class="list-inline-item"><a href="#" class="text-muted">Điều khoản sử dụng</a></li>
+                                <li class="list-inline-item"><span class="text-muted">•</span></li>
+                                <li class="list-inline-item"><a href="#" class="text-muted">Chính sách bảo mật</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+        </main>
+
+        <!-- Bootstrap JS Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- AOS Animation Library -->
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <!-- Custom JavaScript -->
+        <script>
+            // Initialize AOS animation
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true,
+                mirror: false
+            });
+
+            // FAB Menu Toggle - Sửa lại để hoạt động đúng
+            document.addEventListener('DOMContentLoaded', function() {
+                const fabToggle = document.getElementById('fab-toggle');
+                const fabMenu = document.getElementById('fab-menu');
+                
+                if (fabToggle && fabMenu) {
+                    fabToggle.addEventListener('click', function(event) {
+                        event.stopPropagation(); // Ngăn sự kiện click lan ra ngoài
+                        fabMenu.classList.toggle('active');
+                        
+                        // Rotate icon when active
+                        if (fabMenu.classList.contains('active')) {
+                            this.innerHTML = '<i class="bi bi-x fs-4"></i>';
+                        } else {
+                            this.innerHTML = '<i class="bi bi-list fs-4"></i>';
+                        }
+                    });
+                    
+                    // Close menu when clicking elsewhere
+                    document.addEventListener('click', function(event) {
+                        if (!event.target.closest('.fab-container')) {
+                            fabMenu.classList.remove('active');
+                            fabToggle.innerHTML = '<i class="bi bi-list fs-4"></i>';
+                        }
+                    });
+                    
+                    // Ngăn chặn sự kiện click trên các item không lan ra
+                    const fabItems = document.querySelectorAll('.fab-item');
+                    fabItems.forEach(item => {
+                        item.addEventListener('click', function(event) {
+                            event.stopPropagation();
+                        });
+                    });
+                } else {
+                    console.log('FAB elements not found');
+                }
+            });
+
+            // Add to wishlist functionality
+            document.querySelectorAll('.btn-wishlist').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const icon = this.querySelector('i');
+                    if (icon.classList.contains('bi-heart')) {
+                        icon.classList.remove('bi-heart');
+                        icon.classList.add('bi-heart-fill');
+                    } else {
+                        icon.classList.remove('bi-heart-fill');
+                        icon.classList.add('bi-heart');
+                    }
+                });
+            });
+
+            // Enable tooltips
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            });
+            
+            // Chức năng chuyển đổi ngôn ngữ
+            document.addEventListener('DOMContentLoaded', function() {
+                var languageToggle = document.getElementById('language-toggle');
+                if (languageToggle) {
+                    languageToggle.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        console.log("Nút ngôn ngữ được nhấp");
+                        switchLanguage();
+                    });
+                    
+                    // Cập nhật hiển thị nút dựa trên ngôn ngữ hiện tại
+                    var lang = getCookie('googtrans');
+                    if (lang === '/vi/en') {
+                        languageToggle.textContent = 'VI';
+                    } else {
+                        languageToggle.textContent = 'EN';
+                    }
+                }
+            });
+
+            // Search functionality
+            document.addEventListener('DOMContentLoaded', function() {
+                const searchContainer = document.querySelector('.search-container');
+                const desktopSearchBtn = document.getElementById('desktopSearchBtn');
+                const mobileSearchBtn = document.getElementById('mobileSearchBtn');
+                const searchCloseBtn = document.querySelector('.search-close');
+                
+                // Open search bar when search button is clicked
+                desktopSearchBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    searchContainer.style.display = 'block';
+                    searchContainer.querySelector('input').focus();
+                });
+                
+                mobileSearchBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    searchContainer.style.display = 'block';
+                    searchContainer.querySelector('input').focus();
+                });
+                
+                // Close search bar when close button is clicked
+                searchCloseBtn.addEventListener('click', function() {
+                    searchContainer.style.display = 'none';
+                });
+                
+                // Handle search form submission
+                document.querySelector('.search-form').addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const searchTerm = this.querySelector('input').value.trim();
+                    if (searchTerm) {
+                        // Redirect to search results page with search term
+                        window.location.href = 'search.html?q=' + encodeURIComponent(searchTerm);
+                    }
+                });
+            });
+        </script>
+        
+        <!-- Script xử lý triệt để vấn đề thanh cuộn -->
+        <script>
+            // Hàm chờ tài liệu đã tải xong
+            document.addEventListener('DOMContentLoaded', function() {
+                // Thực hiện sau khi trang hoàn toàn tải xong để đảm bảo tất cả style đã được áp dụng
+                window.addEventListener('load', function() {
+                    // Tìm và xử lý các phần tử có thanh cuộn dọc
+                    fixScrollbars();
+                });
+                
+                // Chạy lại khi kích thước cửa sổ thay đổi
+                window.addEventListener('resize', function() {
+                    fixScrollbars();
+                });
+            });
+            
+            // Hàm xử lý các phần tử có thanh cuộn
+            function fixScrollbars() {
+                // Các loại phần tử thường gây ra vấn đề thanh cuộn
+                const selectors = [
+                    '.section-padding', '.container', '.row', 
+                    '.col-md-4', '.col-lg-4', '.col-md-3', '.col-lg-6',
+                    '.feature-card', '.process-card', '.testimonial-card'
+                ];
+                
+                // Tạo CSS động để xử lý từng phần tử
+                let style = document.createElement('style');
+                style.id = 'scroll-fix-dynamic';
+                
+                // Xóa style cũ nếu đã tồn tại
+                const oldStyle = document.getElementById('scroll-fix-dynamic');
+                if (oldStyle) {
+                    oldStyle.remove();
+                }
+                
+                // CSS cơ bản
+                let css = `
+                    html, body {
+                        overflow-x: hidden;
+                        max-width: 100%;
+                    }
+                    
+                    /* Loại bỏ các thanh cuộn cụ thể */
+                `;
+                
+                // Thêm cho mỗi selector
+                selectors.forEach(selector => {
+                    css += `
+                        ${selector}:not(.hero-section) {
+                            overflow: visible !important;
+                            max-height: none !important;
+                            scrollbar-width: none !important;
+                        }
+                        ${selector}:not(.hero-section)::-webkit-scrollbar {
+                            display: none !important;
+                        }
+                    `;
+                });
+                
+                // Đảm bảo hero section hiển thị chính xác
+                css += `
+                    .hero-section {
+                        overflow: hidden !important;
+                        min-height: 500px !important;
+                        max-height: 800px !important;
+                        height: 100vh !important;
+                        position: relative !important;
+                        display: flex !important;
+                        align-items: center !important;
+                    }
+                    
+                    .hero-image {
+                        position: absolute !important;
+                        top: 0 !important;
+                        left: 0 !important;
+                        width: 100% !important;
+                        height: 100% !important;
+                        object-fit: cover !important;
+                    }
+                `;
+                
+                // Thiết lập CSS
+                style.textContent = css;
+                document.head.appendChild(style);
+                
+                // Xử lý trực tiếp các phần tử có thanh cuộn
+                selectors.forEach(selector => {
+                    const elements = document.querySelectorAll(selector);
+                    elements.forEach(el => {
+                        if (el.classList.contains('hero-section')) {
+                            // KHÔNG chỉnh sửa các thuộc tính của hero section
+                            return;
+                        } else {
+                            // Các phần tử khác ẩn thanh cuộn
+                            el.style.overflow = 'visible';
+                            el.style.maxHeight = 'none';
+                        }
+                    });
+                });
+
+                // KHÔNG thay đổi hero section
+                // Chỉ xử lý các section-padding khác
+                document.querySelectorAll('.section-padding:not(.hero-section)').forEach(section => {
+                    section.style.height = 'auto';
+                    section.style.minHeight = 'unset';
+                });
+            }
+        </script>
+        
+        <!-- Xử lý lỗi JavaScript -->
+        <script src="assets/js/fix-errors.js"></script>
+    </body>
+    </html>

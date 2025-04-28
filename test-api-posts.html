@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kiểm tra API Posts</title>
+    <meta charset="UTF-8">
+    <script>
+        function testAPI() {
+            // Hiển thị thông báo "Đang kiểm tra..."
+            document.getElementById('result').innerHTML = 'Đang kiểm tra API...';
+            
+            // Gọi API posts.php
+            fetch('/suncraft/api/posts.php')
+                .then(response => {
+                    // Hiển thị status code
+                    document.getElementById('status').innerHTML = 'Mã trạng thái: ' + response.status;
+                    
+                    // Kiểm tra nếu response là JSON
+                    const contentType = response.headers.get('content-type');
+                    if (contentType && contentType.includes('application/json')) {
+                        return response.json().then(data => {
+                            // Hiển thị dữ liệu JSON
+                            document.getElementById('result').innerHTML = 
+                                '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                        });
+                    } else {
+                        // Nếu không phải JSON, hiển thị nội dung text
+                        return response.text().then(text => {
+                            document.getElementById('result').innerHTML = 
+                                '<pre>' + text + '</pre>';
+                        });
+                    }
+                })
+                .catch(error => {
+                    // Hiển thị lỗi nếu có
+                    document.getElementById('result').innerHTML = 
+                        '<div style="color: red;">Lỗi: ' + error.message + '</div>';
+                });
+        }
+    </script>
+</head>
+<body>
+    <h1>Kiểm tra API Posts</h1>
+    <button onclick="testAPI()">Kiểm tra API posts.php</button>
+    <div id="status" style="margin-top: 20px; font-weight: bold;"></div>
+    <div id="result" style="margin-top: 10px; border: 1px solid #ccc; padding: 10px; min-height: 100px;"></div>
+    
+    <hr>
+    <h2>Kiểm tra các URL API khác</h2>
+    <p>Đường dẫn API hiện tại: <code>/suncraft/api/</code></p>
+    <ul>
+        <li><a href="/suncraft/api/posts.php" target="_blank">posts.php</a></li>
+        <li><a href="/suncraft/api/categories.php" target="_blank">categories.php</a></li>
+        <li><a href="/suncraft/api/products.php" target="_blank">products.php</a></li>
+        <li><a href="/suncraft/api/stats.php" target="_blank">stats.php</a></li>
+    </ul>
+</body>
+</html> 

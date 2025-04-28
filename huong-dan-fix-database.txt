@@ -1,0 +1,84 @@
+HƯỚNG DẪN SỬA LỖI KẾT NỐI CƠ SỞ DỮ LIỆU NAMECHEAP
+
+1. HIỂU VẤN ĐỀ
+==============
+- Lỗi "Could not connect to the database" xảy ra vì thông tin kết nối database không chính xác
+- Database của bạn chỉ có thể truy cập từ hosting Namecheap, không phải từ máy tính cục bộ
+- Bạn cần cập nhật tệp cấu hình với thông tin chính xác và tải lên server
+
+2. CẬP NHẬT FILE CẤU HÌNH
+=========================
+- Chỉnh sửa file "api/config.php" với thông tin đúng:
+
+  ```php
+  define('DB_HOST', 'localhost'); 
+  define('DB_PORT', '3306');
+  define('DB_NAME', 'suncpsdo_suncraft_db');
+  define('DB_USER', 'suncpsdo_suncraft_user');
+  define('DB_PASS', 'StrongPassword123');
+  ```
+
+- Lưu file và tải lên server Namecheap (thư mục public_html hoặc tương tự)
+
+3. TẢI LÊN TOÀN BỘ WEBSITE
+=========================
+- Đăng nhập vào cPanel của Namecheap
+- Mở File Manager và điều hướng đến thư mục public_html
+- Tải lên tất cả tệp của trang web, bao gồm tệp config.php đã cập nhật
+- Đảm bảo các quyền tệp đúng: Tệp PHP thường là 644, thư mục là 755
+
+4. KIỂM TRA KẾT NỐI
+==================
+- Tạo file "test-connection.php" với nội dung:
+
+  ```php
+  <?php
+  require_once 'api/config.php';
+  
+  try {
+      $dsn = "mysql:host=" . DB_HOST . ";port=" . DB_PORT . ";dbname=" . DB_NAME . ";charset=utf8mb4";
+      $pdo = new PDO($dsn, DB_USER, DB_PASS);
+      $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      
+      echo "Kết nối cơ sở dữ liệu thành công!";
+      
+      $tables = $pdo->query("SHOW TABLES")->fetchAll(PDO::FETCH_COLUMN);
+      echo "<br>Số bảng trong cơ sở dữ liệu: " . count($tables);
+  } catch (PDOException $e) {
+      echo "Lỗi kết nối: " . $e->getMessage();
+  }
+  ?>
+  ```
+
+- Tải lên server và truy cập file này qua trình duyệt để kiểm tra kết nối
+
+5. XỬ LÝ LỖI THƯỜNG GẶP
+=====================
+- Nếu gặp lỗi "Access denied", kiểm tra lại tên người dùng và mật khẩu
+- Nếu gặp lỗi "Unknown database", kiểm tra lại tên database
+- Nếu gặp lỗi "Connection refused", đảm bảo MySQL đang chạy trên server
+
+6. LƯU Ý QUAN TRỌNG
+=================
+- Database chỉ có thể truy cập từ hosting Namecheap, không thể từ máy tính cục bộ
+- Các thay đổi cấu hình cần được tải lên server để có hiệu lực
+- Để phát triển cục bộ, bạn cần tạo một cơ sở dữ liệu riêng trên máy tính của mình
+
+Nếu bạn muốn phát triển cục bộ, hãy sửa config.php để phát hiện môi trường:
+```php
+if ($_SERVER['HTTP_HOST'] == 'localhost' || strpos($_SERVER['HTTP_HOST'], '127.0.0.1') !== false) {
+    // Cấu hình cho môi trường phát triển cục bộ
+    define('DB_HOST', 'localhost');
+    define('DB_PORT', '3306');
+    define('DB_NAME', 'suncraft_db');
+    define('DB_USER', 'root');
+    define('DB_PASS', '');
+} else {
+    // Cấu hình cho môi trường production (Namecheap)
+    define('DB_HOST', 'localhost');
+    define('DB_PORT', '3306');
+    define('DB_NAME', 'suncpsdo_suncraft_db');
+    define('DB_USER', 'suncpsdo_suncraft_user');
+    define('DB_PASS', 'StrongPassword123');
+}
+``` 

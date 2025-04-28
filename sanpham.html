@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sản phẩm - Suncraft - Thủ công mỹ nghệ Việt Nam</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="icon" type="image/x-icon" href="./sun_images_home/logo_doc1.png">
+    <!-- Product Manager JS -->
+    <script src="static/js/product-manager.js" defer></script>
+    <!-- Google Translate -->
+    <script type="text/javascript">
+        // Hàm thiết lập cookie
+        function setCookie(name, value, days) {
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/";
+        }
+
+        // Hàm lấy giá trị cookie
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        // Hàm chuyển đổi ngôn ngữ
+        function switchLanguage() {
+            console.log("Đang chuyển đổi ngôn ngữ...");
+            var lang = getCookie('googtrans');
+            console.log("Cookie hiện tại: " + lang);
+            
+            if (!lang || lang === '/vi/vi' || lang === '/auto/vi') {
+                // Chuyển sang tiếng Anh
+                console.log("Chuyển sang tiếng Anh");
+                setCookie('googtrans', '/vi/en', 1);
+                location.reload();
+            } else {
+                // Chuyển về tiếng Việt
+                console.log("Chuyển về tiếng Việt");
+                setCookie('googtrans', '/vi/vi', 1);
+                location.reload();
+            }
+        }
+        
+        // Hàm khởi tạo Google Translate
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'vi',
+                includedLanguages: 'en,vi',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+
+            // Kiểm tra cookie và cập nhật nút ngôn ngữ
+            var lang = getCookie('googtrans');
+            var langButton = document.getElementById('language-toggle');
+            if (langButton) {
+                if (lang === '/vi/en') {
+                    langButton.textContent = 'VI';
+                } else {
+                    langButton.textContent = 'EN';
+                }
+            }
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <style>
+        /* CSS cho thẻ sản phẩm */
+        .product-card {
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+        }
+        
+        .product-card .position-relative {
+            overflow: hidden;
+        }
+        
+        .product-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .product-card:hover .product-overlay {
+            opacity: 1;
+        }
+        
+        .product-overlay .btn {
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            opacity: 0;
+        }
+        
+        .product-card:hover .product-overlay .btn {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .product-card:hover .product-overlay .btn:nth-child(2) {
+            transition-delay: 0.1s;
+        }
+        
+        .serif-font {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .bg-gold-light {
+            background-color: #f9f5ea;
+        }
+
+        .navbar-compact {
+            padding-top: 0.25rem;
+            padding-bottom: 0.25rem;
+            margin-top: 0;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+        }
+        .navbar-compact .navbar-brand {
+            padding: 0;
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+        .navbar-compact .navbar-brand img {
+            width: 75px;
+            height: 70px;
+            margin-top: 0;
+            margin-bottom: 0;
+            object-fit: contain;
+        }
+        .navbar-compact .nav-link {
+            padding-top: 0.25rem !important;
+            padding-bottom: 0.25rem !important;
+            font-size: 0.9rem;
+        }
+        .navbar-compact .navbar-nav {
+            gap: 0.4rem;
+        }
+        .navbar-compact .btn-link {
+            padding: 0.25rem;
+        }
+        .navbar-compact .btn-outline-primary {
+            padding: 0.25rem 0.75rem;
+            font-size: 0.9rem;
+        }
+        /* Tùy chỉnh màu sắc của pagination */
+        .pagination .page-link {
+            color: #212529;
+            border-color: #dee2e6;
+            transition: all 0.3s ease;
+        }
+        .pagination .page-link:hover {
+            color: #900202;
+            background-color: rgba(144, 2, 2, 0.1);
+            border-color: #dee2e6;
+        }
+        .pagination .page-item.active .page-link {
+            background-color: #900202;
+            border-color: #900202;
+            color: white;
+        }
+        .pagination .page-item.disabled .page-link {
+            color: #6c757d;
+            pointer-events: none;
+            background-color: #fff;
+            border-color: #dee2e6;
+        }
+
+        /* CSS để căn lề các phần tử */
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        header, footer {
+            width: 100%;
+        }
+
+        section {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .bg-gold-light {
+            width: 100%;
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        /* Đảm bảo filter và products section căn đúng */
+        .row {
+            width: 100%;
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        @media (max-width: 992px) {
+            .container {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+        }
+
+        /* Điều chỉnh navbar bám dính */
+        .sticky-top {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1030;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        /* Thêm padding vào body để tránh nội dung bị che khuất bởi navbar cố định */
+        body {
+            padding-top: 85px;
+        }
+        
+        /* Điều chỉnh vị trí logo trên màn hình nhỏ */
+        @media (max-width: 991.98px) {
+            .navbar > .container {
+                position: relative;
+            }
+            .navbar-brand {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                margin: 0 !important;
+                z-index: 1;
+                height: 60px;
+                display: flex;
+                align-items: center;
+                overflow: hidden;
+            }
+            .navbar-brand img {
+                max-height: 55px;
+                width: auto;
+                object-fit: contain;
+            }
+            .navbar-toggler {
+                display: none; /* Ẩn nút hamburger */
+            }
+            .navbar-collapse {
+                display: none !important; /* Ẩn dropdown menu */
+            }
+        }
+        
+        /* Floating Action Button (FAB) */
+        .fab-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1040;
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: flex-end;
+        }
+        
+        .fab-main {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #900202;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .fab-main:hover {
+            background: #a72020;
+            transform: scale(1.1);
+        }
+        
+        .fab-menu {
+            position: absolute;
+            bottom: 80px;
+            right: 12px;
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            overflow: hidden;
+        }
+        
+        .fab-menu.active {
+            display: flex;
+        }
+        
+        .fab-item {
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            transform: translateY(20px);
+            opacity: 0;
+        }
+        
+        .fab-menu.active .fab-item {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .fab-menu.active .fab-item:nth-child(1) { transition-delay: 0.1s; }
+        .fab-menu.active .fab-item:nth-child(2) { transition-delay: 0.2s; }
+        .fab-menu.active .fab-item:nth-child(3) { transition-delay: 0.3s; }
+        .fab-menu.active .fab-item:nth-child(4) { transition-delay: 0.4s; }
+        .fab-menu.active .fab-item:nth-child(5) { transition-delay: 0.5s; }
+        
+        .fab-item-label {
+            display: none; /* Ẩn nhãn */
+        }
+        
+        .fab-item-button {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #900202;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .fab-item-button:hover {
+            background: #900202;
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        /* CSS cho các thiết bị nhỏ */
+        @media (min-width: 992px) {
+            .fab-container {
+                display: none; /* Ẩn FAB trên thiết bị lớn */
+            }
+        }
+        
+        /* Đảm bảo FAB hiển thị luôn trên thiết bị di động */
+        @media (max-width: 991.98px) {
+            .fab-container {
+                display: flex !important;
+            }
+        }
+
+        /* Ẩn phần tử Google Translate */
+        .goog-te-banner-frame.skiptranslate,
+        .goog-te-gadget-icon,
+        .goog-te-menu-value span {
+            display: none !important;
+        }
+        
+        .goog-te-gadget-simple {
+            background-color: transparent !important;
+            border: none !important;
+            padding: 0 !important;
+            font-size: 0 !important;
+            line-height: 0 !important;
+        }
+        
+        #google_translate_element {
+            position: absolute;
+            top: -1000px;
+            opacity: 0;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+        }
+        
+        body {
+            top: 0 !important;
+        }
+        
+        .skiptranslate {
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="google_translate_element"></div>
+    <!-- Header -->
+    <header class="sticky-top">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom navbar-compact">
+            <div class="container">
+                <!-- Mobile Search and Cart -->
+                <div class="d-flex d-lg-none align-items-center me-2">
+                    <a href="#" class="btn btn-link text-primary me-1" id="mobileSearchBtn">
+                        <i class="bi bi-search"></i>
+                    </a>
+                </div>
+                
+                <!-- Logo Center -->
+                <a class="navbar-brand mx-auto d-flex justify-content-center" href="index.html">
+                    <img src="./sun_images_home/logo_doc1.png" alt="Suncraft logo" style="width:75px;height:70px;">
+                </a>
+                
+                <!-- Ẩn nút hamburger trên mobile -->
+                <button class="navbar-toggler d-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <!-- Giữ nguyên menu desktop -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Trang chủ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="sanpham.html">
+                                Sản phẩm
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="lienket.html">Liên kết</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="blog.html">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="lien_he.html">Liên hệ</a>
+                        </li>
+                    </ul>
+                    <div class="d-none d-lg-flex align-items-center">
+                        <a href="#" class="btn btn-link text-primary me-2" id="desktopSearchBtn">
+                            <i class="bi bi-search"></i>
+                        </a>
+                        <a href="Adm/log-in.html" class="btn btn-link text-primary me-2">
+                            <i class="bi bi-person"></i>
+                        </a>
+                        <a href="#" class="btn btn-outline-primary d-none d-md-block" id="language-toggle">
+                            EN
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- Search Bar (Hidden by default) -->
+        <div class="search-container bg-white py-3 border-bottom" style="display: none;">
+            <div class="container">
+                <form action="#" method="get" class="search-form">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm..." aria-label="Tìm kiếm">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="bi bi-search"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary ms-2 search-close">
+                            <i class="bi bi-x-lg"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </header>
+
+    <!-- FAB (Floating Action Button) -->
+    <div class="fab-container">
+        <div class="fab-main" id="fab-toggle">
+            <i class="bi bi-list fs-4"></i>
+        </div>
+        <div class="fab-menu" id="fab-menu">
+            <div class="fab-item">
+                <div class="fab-item-label">Trang chủ</div>
+                <a href="index.html" class="fab-item-button" title="Trang chủ">
+                    <i class="bi bi-house"></i>
+                </a>
+            </div>
+            <div class="fab-item">
+                <div class="fab-item-label">Sản phẩm</div>
+                <a href="sanpham.html" class="fab-item-button" title="Sản phẩm">
+                    <i class="bi bi-box"></i>
+                </a>
+            </div>
+            <div class="fab-item">
+                <div class="fab-item-label">Liên kết</div>
+                <a href="lienket.html" class="fab-item-button" title="Liên kết">
+                    <i class="bi bi-link"></i>
+                </a>
+            </div>
+            <div class="fab-item">
+                <div class="fab-item-label">Blog</div>
+                <a href="blog.html" class="fab-item-button" title="Blog">
+                    <i class="bi bi-journal-text"></i>
+                </a>
+            </div>
+            <div class="fab-item">
+                <div class="fab-item-label">Liên hệ</div>
+                <a href="lien_he.html" class="fab-item-button" title="Liên hệ">
+                    <i class="bi bi-chat"></i>
+                </a>
+            </div>
+            <div class="fab-item">
+                <div class="fab-item-label">Đăng nhập</div>
+                <a href="./Adm/log-in.html" class="fab-item-button" title="Đăng nhập">
+                    <i class="bi bi-person"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Page Title Section -->
+        <section class="bg-gold-light py-4 mb-4">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <h1 class="serif-font fw-bold mb-0">Sản phẩm</h1>
+                        <p class="lead text-muted mt-3">Tinh hoa thủ công Việt Nam - Tạo tác từ trái tim, truyền tải qua đôi bàn tay</p>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-md-end mt-3 mt-md-0">
+                        <div class="d-flex align-items-center bg-white py-2 px-3 rounded-pill shadow-sm">
+                            <label for="sortSelect" class="me-2 text-nowrap mb-0 fw-medium" style="color: #9c0202;">
+                                <i class="bi bi-sort-down me-1"></i>Sắp xếp theo:
+                            </label>
+                            <div class="dropdown">
+                                <select id="sortSelect" class="form-select form-select-sm border-0 bg-transparent" 
+                                        style="width: auto; cursor: pointer; font-weight: 500; color: #333; background-image: url('data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3e%3cpath fill=%27%239c0202%27 d=%27M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z%27/%3e%3c/svg%3e');">
+                                    <option value="Mới nhất" selected>Mới nhất</option>
+                                    <option value="Giá: Thấp đến cao">Giá: Thấp đến cao</option>
+                                    <option value="Giá: Cao đến thấp">Giá: Cao đến thấp</option>
+                                    <option value="Tên: A-Z">Tên: A-Z</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filter and Products Section -->
+        <section class="container mb-5">
+            <div class="row g-4">
+                <!-- Sidebar Filters - Ẩn danh mục -->
+                <div class="col-lg-3" style="display: none;">
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-body">
+                            <h5 class="serif-font fw-bold mb-3">Danh mục</h5>
+                            <div class="list-group list-group-flush" id="categories-container">
+                                <a href="sanpham.html" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                    Tất cả sản phẩm
+                                </a>
+                                <!-- Danh mục sẽ được tải động từ API -->
+                                <div class="text-center py-2">
+                                    <div class="spinner-border spinner-border-sm text-primary" role="status">
+                                        <span class="visually-hidden">Đang tải...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Products Grid - Chiếm toàn bộ chiều rộng -->
+                <div class="col-lg-12">
+                    <div id="products-container" class="row g-3 g-md-4">
+                        <!-- Sản phẩm sẽ được hiển thị động từ JavaScript -->
+                        <div class="col-12 text-center py-4">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Đang tải...</span>
+                            </div>
+                            <p class="mt-3">Đang tải sản phẩm...</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <nav class="mt-5" aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                                    <i class="bi bi-chevron-left"></i>
+                                </a>
+                            </li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">
+                                    <i class="bi bi-chevron-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="bg-gold-light pt-5 pb-3">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="footer-brand mb-3">
+                        <img src="./Suncraft_website_Inf/suncraft_logo/e6e59529-b1df-4676-a5b2-f3757e67957e.png" alt="Suncraft logo" style="width:120px;height:115px;">
+                    </div>
+                    <p class="mb-4">Suncraft - Nơi hội tụ tinh hoa nghề thủ công Việt Nam, kết nối các nghệ nhân tài hoa với những người yêu thích nghệ thuật truyền thống.</p>
+                    <div class="d-flex gap-3 mb-3">
+                        <a href="https://www.facebook.com/share/1FVZwMHwFb/?mibextid=wwXIfr" class="social-link">
+                            <i class="bi bi-facebook"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="bi bi-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="bi bi-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="footer-heading mb-3">Danh mục</h5>
+                    <ul class="footer-links" id="footer-categories">
+                        <!-- Danh mục sẽ được tải động từ JavaScript -->
+                        <li><a href="sanpham.html">Tất cả sản phẩm</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="footer-heading mb-3">Liên kết</h5>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Trang chủ</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="lienket.html">Liên kết</a></li>
+                        <li><a href="lien_he.html">Liên hệ</a></li>
+                        <li><a href="#">Chính sách bảo hành</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-12">
+                    <h5 class="footer-heading mb-3">Đăng ký nhận tin</h5>
+                    <p class="mb-3">Đăng ký để nhận thông tin về sản phẩm mới và khuyến mãi</p>
+                    <form class="footer-subscribe-form mb-3">
+                        <div class="input-group mb-3">
+                            <input type="email" class="form-control" placeholder="Email của bạn" required>
+                            <button class="btn btn-primary" type="submit">Đăng ký</button>
+                        </div>
+                    </form>
+                    <p class="small">Liên hệ: <a href="mailto:info@suncraft.vn">info@suncraft.vn</a></p>
+                </div>
+            </div>
+            <hr class="mt-4 mb-3">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="small text-muted mb-md-0">© 2025 Suncraft. Tất cả quyền được bảo lưu.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <ul class="list-inline mb-0 small">
+                        <li class="list-inline-item"><a href="#" class="text-muted">Điều khoản sử dụng</a></li>
+                        <li class="list-inline-item"><span class="text-muted">•</span></li>
+                        <li class="list-inline-item"><a href="#" class="text-muted">Chính sách bảo mật</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Custom JavaScript -->
+    <script src="script.js"></script>
+    <script>
+        // Initialize AOS animation
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true,
+            mirror: false
+        });
+
+        // FAB Menu Toggle - Sửa lại để hoạt động đúng
+        document.addEventListener('DOMContentLoaded', function() {
+            const fabToggle = document.getElementById('fab-toggle');
+            const fabMenu = document.getElementById('fab-menu');
+            
+            if (fabToggle && fabMenu) {
+                fabToggle.addEventListener('click', function(event) {
+                    event.stopPropagation(); // Ngăn sự kiện click lan ra ngoài
+                    fabMenu.classList.toggle('active');
+                    
+                    // Rotate icon when active
+                    if (fabMenu.classList.contains('active')) {
+                        this.innerHTML = '<i class="bi bi-x fs-4"></i>';
+                    } else {
+                        this.innerHTML = '<i class="bi bi-list fs-4"></i>';
+                    }
+                });
+                
+                // Close menu when clicking elsewhere
+                document.addEventListener('click', function(event) {
+                    if (!event.target.closest('.fab-container')) {
+                        fabMenu.classList.remove('active');
+                        fabToggle.innerHTML = '<i class="bi bi-list fs-4"></i>';
+                    }
+                });
+                
+                // Ngăn chặn sự kiện click trên các item không lan ra
+                const fabItems = document.querySelectorAll('.fab-item');
+                fabItems.forEach(item => {
+                    item.addEventListener('click', function(event) {
+                        event.stopPropagation();
+                    });
+                });
+            } else {
+                console.log('FAB elements not found');
+            }
+        });
+
+        // Price range slider
+        const priceRange = document.getElementById('priceRange');
+        const priceRangeValue = document.getElementById('priceRangeValue');
+        
+        if(priceRange && priceRangeValue) {
+            priceRange.addEventListener('input', function() {
+                const value = this.value;
+                const formattedValue = new Intl.NumberFormat('vi-VN').format(value);
+                priceRangeValue.textContent = `0₫ - ${formattedValue}₫`;
+            });
+        }
+
+        // Add to wishlist functionality
+        document.querySelectorAll('.btn-wishlist').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const icon = this.querySelector('i');
+                if (icon.classList.contains('bi-heart')) {
+                    icon.classList.remove('bi-heart');
+                    icon.classList.add('bi-heart-fill');
+                    icon.style.color = '#900202';
+                    showNotification('Đã thêm vào danh sách yêu thích');
+                } else {
+                    icon.classList.remove('bi-heart-fill');
+                    icon.classList.add('bi-heart');
+                    icon.style.color = '';
+                    showNotification('Đã xóa khỏi danh sách yêu thích');
+                }
+            });
+        });
+
+        // Add to Cart Animation
+        document.querySelectorAll('.btn-primary:not(form .btn-primary)').forEach(button => {
+            button.addEventListener('click', function() {
+                // Change button text temporarily
+                const originalText = this.textContent;
+                this.innerHTML = '<i class="bi bi-check2"></i> Đã thêm';
+                this.classList.add('added');
+                
+                // Show notification
+                showNotification('Đã thêm sản phẩm vào giỏ hàng');
+                
+                // Reset button after delay
+                setTimeout(() => {
+                    this.textContent = originalText;
+                    this.classList.remove('added');
+                }, 2000);
+            });
+        });
+
+        // Notification System
+        function showNotification(message) {
+            // Create notification element if it doesn't exist
+            let notification = document.querySelector('.custom-notification');
+            
+            if (!notification) {
+                notification = document.createElement('div');
+                notification.className = 'custom-notification';
+                document.body.appendChild(notification);
+                
+                // Add styles
+                notification.style.position = 'fixed';
+                notification.style.bottom = '20px';
+                notification.style.right = '20px';
+                notification.style.backgroundColor = '#0d6efd';
+                notification.style.color = 'white';
+                notification.style.padding = '12px 20px';
+                notification.style.borderRadius = '4px';
+                notification.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
+                notification.style.zIndex = '9999';
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateY(20px)';
+                notification.style.transition = 'all 0.3s ease';
+            }
+            
+            // Set message and show notification
+            notification.textContent = message;
+            setTimeout(() => {
+                notification.style.opacity = '1';
+                notification.style.transform = 'translateY(0)';
+            }, 100);
+            
+            // Hide notification after delay
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateY(20px)';
+            }, 3000);
+        }
+
+        // Search functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchContainer = document.querySelector('.search-container');
+            const desktopSearchBtn = document.getElementById('desktopSearchBtn');
+            const mobileSearchBtn = document.getElementById('mobileSearchBtn');
+            const searchCloseBtn = document.querySelector('.search-close');
+            
+            // Open search bar when search button is clicked
+            desktopSearchBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                searchContainer.style.display = 'block';
+                searchContainer.querySelector('input').focus();
+            });
+            
+            mobileSearchBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                searchContainer.style.display = 'block';
+                searchContainer.querySelector('input').focus();
+            });
+            
+            // Close search bar when close button is clicked
+            searchCloseBtn.addEventListener('click', function() {
+                searchContainer.style.display = 'none';
+            });
+            
+            // Handle search form submission
+            document.querySelector('.search-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const searchTerm = this.querySelector('input').value.trim();
+                if (searchTerm) {
+                    // Redirect to search results page with search term
+                    window.location.href = 'search.html?q=' + encodeURIComponent(searchTerm);
+                }
+            });
+        });
+
+        // Chức năng chuyển đổi ngôn ngữ
+        document.addEventListener('DOMContentLoaded', function() {
+            var languageToggle = document.getElementById('language-toggle');
+            if (languageToggle) {
+                languageToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log("Nút ngôn ngữ được nhấp");
+                    switchLanguage();
+                });
+                
+                // Cập nhật hiển thị nút dựa trên ngôn ngữ hiện tại
+                var lang = getCookie('googtrans');
+                if (lang === '/vi/en') {
+                    languageToggle.textContent = 'VI';
+                } else {
+                    languageToggle.textContent = 'EN';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

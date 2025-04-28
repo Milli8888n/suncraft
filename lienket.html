@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liên kết - Suncraft</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="icon" type="image/x-icon" href="./sun_images_home/logo_doc1.png">
+    <!-- Google Translate -->
+    <script type="text/javascript">
+        // Hàm thiết lập cookie
+        function setCookie(name, value, days) {
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/";
+        }
+
+        // Hàm lấy giá trị cookie
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        // Hàm chuyển đổi ngôn ngữ
+        function switchLanguage() {
+            console.log("Đang chuyển đổi ngôn ngữ...");
+            var lang = getCookie('googtrans');
+            console.log("Cookie hiện tại: " + lang);
+            
+            if (!lang || lang === '/vi/vi' || lang === '/auto/vi') {
+                // Chuyển sang tiếng Anh
+                console.log("Chuyển sang tiếng Anh");
+                setCookie('googtrans', '/vi/en', 1);
+                location.reload();
+            } else {
+                // Chuyển về tiếng Việt
+                console.log("Chuyển về tiếng Việt");
+                setCookie('googtrans', '/vi/vi', 1);
+                location.reload();
+            }
+        }
+        
+        // Hàm khởi tạo Google Translate
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'vi',
+                includedLanguages: 'en,vi',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+
+            // Kiểm tra cookie và cập nhật nút ngôn ngữ
+            var lang = getCookie('googtrans');
+            var langButton = document.getElementById('language-toggle');
+            if (langButton) {
+                if (lang === '/vi/en') {
+                    langButton.textContent = 'VI';
+                } else {
+                    langButton.textContent = 'EN';
+                }
+            }
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <style>
+        .navbar-compact {
+            padding-top: 0.25rem;
+            padding-bottom: 0.25rem;
+            margin-top: 0;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+        }
+        .navbar-compact .navbar-brand {
+            padding: 0;
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+        .navbar-compact .navbar-brand img {
+            width: 75px;
+            height: 70px;
+            margin-top: 0;
+            margin-bottom: 0;
+            object-fit: contain;
+        }
+        .navbar-compact .nav-link {
+            padding-top: 0.25rem !important;
+            padding-bottom: 0.25rem !important;
+            font-size: 0.9rem;
+        }
+        .navbar-compact .navbar-nav {
+            gap: 0.4rem;
+        }
+        .navbar-compact .btn-link {
+            padding: 0.25rem;
+        }
+        .navbar-compact .btn-outline-primary {
+            padding: 0.25rem 0.75rem;
+            font-size: 0.9rem;
+        }
+        /* Ẩn phần tử Google Translate */
+        .goog-te-banner-frame.skiptranslate,
+        .goog-te-gadget-icon,
+        .goog-te-menu-value span {
+            display: none !important;
+        }
+        
+        .goog-te-gadget-simple {
+            background-color: transparent !important;
+            border: none !important;
+            padding: 0 !important;
+            font-size: 0 !important;
+            line-height: 0 !important;
+        }
+        
+        #google_translate_element {
+            position: absolute;
+            top: -1000px;
+            opacity: 0;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+        }
+        
+        body {
+            top: 0 !important;
+        }
+        
+        .skiptranslate {
+            opacity: 0;
+        }
+        
+        /* Ẩn thanh công cụ bản dịch Google */
+        .goog-te-banner-frame {
+            display: none !important;
+        }
+        
+        body {
+            top: 0 !important;
+        }
+        
+        /* CSS để căn chỉnh các phần tử trong trang */
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            /* Thêm để loại bỏ thanh cuộn dọc */
+            overflow-y: auto;
+        }
+        
+        section, .container, .row {
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            overflow: visible;
+        }
+        
+        .section-padding {
+            padding: 5rem 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: visible;
+        }
+        
+        .section-padding .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            overflow: visible;
+        }
+        
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+            justify-content: center;
+            overflow: visible;
+        }
+        
+        .card {
+            height: 100%;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .card p {
+            flex-grow: 1;
+        }
+        
+        /* Đảm bảo hình ảnh không bị tràn */
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        /* Căn chỉnh form đăng ký */
+        .footer-subscribe-form {
+            margin: 0 auto;
+            max-width: 100%;
+        }
+        
+        /* Fix thanh cuộn */
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+        
+        /* Đảm bảo các phần tử không gây ra thanh cuộn dọc */
+        * {
+            box-sizing: border-box;
+        }
+        
+        /* Căn chỉnh mobile */
+        @media (max-width: 992px) {
+            .section-padding {
+                padding: 3rem 0;
+            }
+            
+            .container {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+        }
+        
+        /* Điều chỉnh navbar bám dính */
+        .sticky-top {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1030;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        /* Thêm padding vào body để tránh nội dung bị che khuất bởi navbar cố định */
+        body {
+            padding-top: 85px;
+        }
+        
+        /* Điều chỉnh vị trí logo trên màn hình nhỏ */
+        @media (max-width: 991.98px) {
+            .navbar > .container {
+                position: relative;
+            }
+            .navbar-brand {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                margin: 0 !important;
+                z-index: 1;
+                height: 60px;
+                display: flex;
+                align-items: center;
+                overflow: hidden;
+            }
+            .navbar-brand img {
+                max-height: 55px;
+                width: auto;
+                object-fit: contain;
+            }
+            .navbar-toggler {
+                display: none; /* Ẩn nút hamburger */
+            }
+            .navbar-collapse {
+                display: none !important; /* Ẩn dropdown menu */
+            }
+        }
+        
+        /* Floating Action Button (FAB) */
+        .fab-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1040;
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: flex-end;
+        }
+        
+        .fab-main {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #900202;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .fab-main:hover {
+            background: #a72020;
+            transform: scale(1.1);
+        }
+        
+        .fab-menu {
+            position: absolute;
+            bottom: 80px;
+            right: 12px;
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            overflow: hidden;
+        }
+        
+        .fab-menu.active {
+            display: flex;
+        }
+        
+        .fab-item {
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            transform: translateY(20px);
+            opacity: 0;
+        }
+        
+        .fab-menu.active .fab-item {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .fab-menu.active .fab-item:nth-child(1) { transition-delay: 0.1s; }
+        .fab-menu.active .fab-item:nth-child(2) { transition-delay: 0.2s; }
+        .fab-menu.active .fab-item:nth-child(3) { transition-delay: 0.3s; }
+        .fab-menu.active .fab-item:nth-child(4) { transition-delay: 0.4s; }
+        .fab-menu.active .fab-item:nth-child(5) { transition-delay: 0.5s; }
+        
+        .fab-item-label {
+            display: none; /* Ẩn nhãn */
+        }
+        
+        .fab-item-button {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #900202;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .fab-item-button:hover {
+            background: #900202;
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        /* CSS cho các thiết bị nhỏ */
+        @media (min-width: 992px) {
+            .fab-container {
+                display: none; /* Ẩn FAB trên thiết bị lớn */
+            }
+        }
+        
+        /* Đảm bảo FAB hiển thị luôn trên thiết bị di động */
+        @media (max-width: 991.98px) {
+            .fab-container {
+                display: flex !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="google_translate_element"></div>
+    <!-- Header -->
+    <header class="sticky-top">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom navbar-compact">
+            <div class="container">
+                <!-- Mobile Search and Cart -->
+                <div class="d-flex d-lg-none align-items-center me-2">
+                    <a href="#" class="btn btn-link text-primary me-1" id="mobileSearchBtn">
+                        <i class="bi bi-search"></i>
+                    </a>
+                </div>
+                
+                <!-- Logo Center -->
+                <a class="navbar-brand mx-auto d-flex justify-content-center" href="index.html">
+                    <img src="./sun_images_home/logo_doc1.png" alt="Suncraft logo" style="width:75px;height:70px;">
+                </a>
+                
+                <!-- Ẩn nút hamburger trên mobile -->
+                <button class="navbar-toggler d-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <!-- Giữ nguyên menu desktop -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Trang chủ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="sanpham.html">Sản phẩm</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="lienket.html">Liên kết</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="blog.html">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="lien_he.html">Liên hệ</a>
+                        </li>
+                    </ul>
+                    <div class="d-none d-lg-flex align-items-center">
+                        <a href="#" class="btn btn-link text-primary me-2" id="desktopSearchBtn">
+                            <i class="bi bi-search"></i>
+                        </a>
+                        <a href="Adm/log-in.html" class="btn btn-link text-primary me-2">
+                            <i class="bi bi-person"></i>
+                        </a>
+                        <a href="#" class="btn btn-outline-primary d-none d-md-block" id="language-toggle">
+                            EN
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- Search Bar (Hidden by default) -->
+        <div class="search-container bg-white py-3 border-bottom" style="display: none;">
+            <div class="container">
+                <form action="#" method="get" class="search-form">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm..." aria-label="Tìm kiếm">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="bi bi-search"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary ms-2 search-close">
+                            <i class="bi bi-x-lg"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </header>
+
+    <!-- FAB (Floating Action Button) -->
+    <div class="fab-container">
+        <div class="fab-main" id="fab-toggle">
+            <i class="bi bi-list fs-4"></i>
+        </div>
+        <div class="fab-menu" id="fab-menu">
+            <div class="fab-item">
+                <div class="fab-item-label">Trang chủ</div>
+                <a href="index.html" class="fab-item-button" title="Trang chủ">
+                    <i class="bi bi-house"></i>
+                </a>
+            </div>
+            <div class="fab-item">
+                <div class="fab-item-label">Sản phẩm</div>
+                <a href="sanpham.html" class="fab-item-button" title="Sản phẩm">
+                    <i class="bi bi-box"></i>
+                </a>
+            </div>
+            <div class="fab-item">
+                <div class="fab-item-label">Liên kết</div>
+                <a href="lienket.html" class="fab-item-button" title="Liên kết">
+                    <i class="bi bi-link"></i>
+                </a>
+            </div>
+            <div class="fab-item">
+                <div class="fab-item-label">Blog</div>
+                <a href="blog.html" class="fab-item-button" title="Blog">
+                    <i class="bi bi-journal-text"></i>
+                </a>
+            </div>
+            <div class="fab-item">
+                <div class="fab-item-label">Liên hệ</div>
+                <a href="lien_he.html" class="fab-item-button" title="Liên hệ">
+                    <i class="bi bi-chat"></i>
+                </a>
+            </div>
+            <div class="fab-item">
+                <div class="fab-item-label">Đăng nhập</div>
+                <a href="Adm/log-in.html" class="fab-item-button" title="Đăng nhập">
+                    <i class="bi bi-person"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        <!-- About Header -->
+        <section class="py-5 bg-light">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 text-center">
+                        <h1 class="serif-font fw-bold mb-3">Về chúng tôi</h1>
+                        <p class="lead text-muted">Khám phá câu chuyện và sứ mệnh của Suncraft</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Introduction -->
+        <section class="section-padding">
+            <div class="container">
+                <div class="row align-items-center g-5">
+                    <div class="col-lg-6" data-aos="fade-right">
+                        <h2 class="serif-font fw-bold section-title mb-4">Câu chuyện của chúng tôi</h2>
+                        <p class="mb-4">Suncraft là một doanh nghiệp xã hội tiên phong trong việc phát triển và quảng bá các sản phẩm thủ công mỹ nghệ độc đáo của dân tộc Việt Nam.</p>
+                        <p class="mb-4">Với tâm huyết bảo tồn và phát triển các làng nghề thủ công truyền thống, Suncraft không chỉ mang đến những sản phẩm tinh xảo mà còn góp phần nâng cao đời sống của các nghệ nhân và người lao động ở các làng nghề, bảo vệ môi trường và gìn giữ bản sắc văn hóa dân tộc.</p>
+                    </div>
+                    <div class="col-lg-6" data-aos="fade-left">
+                        <div class="rounded overflow-hidden shadow-sm">
+                            <img src="./images/community_image.jpg" alt="Cộng đồng Suncraft" class="img-fluid w-100">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Vision & Mission -->
+        <section class="section-padding bg-gold-light">
+            <div class="container">
+                <div class="row justify-content-center mb-5">
+                    <div class="col-lg-8 text-center">
+                        <h2 class="serif-font fw-bold section-title">Tầm Nhìn và Sứ Mệnh</h2>
+                    </div>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body p-4 p-lg-5">
+                                <div class="text-primary mb-3">
+                                    <i class="bi bi-eye fs-1"></i>
+                                </div>
+                                <h3 class="serif-font fw-bold mb-3">Tầm nhìn</h3>
+                                <p class="text-muted">Trở thành doanh nghiệp tiên phong trong việc bảo tồn và phát triển các làng nghề thủ công truyền thống Việt Nam, tạo ra giá trị bền vững cho cộng đồng và môi trường.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <img src="./images/nghe_truyen_thong_img.jpg" class="card-img-top" alt="Nghề truyền thống">
+                        </div>
+                    </div>
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body p-4 p-lg-5">
+                                <div class="text-primary mb-3">
+                                    <i class="bi bi-flag fs-1"></i>
+                                </div>
+                                <h3 class="serif-font fw-bold mb-3">Sứ mệnh</h3>
+                                <p class="text-muted">Tôn vinh, quảng bá và phát triển các làng nghề thủ công truyền thống, mang đến cho khách hàng những sản phẩm chất lượng cao, hỗ trợ các nhóm dân tộc thiểu số, các nhóm khuyết tật, các làng nghề truyền thống trong việc khôi phục phát triển sản xuất hàng thủ công mỹ nghệ. Góp phần vào việc cải thiện đời sống của nghệ nhân và gìn giữ bản sắc văn hóa dân tộc.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Core Values -->
+        <section class="section-padding">
+            <div class="container">
+                <div class="row justify-content-center mb-5">
+                    <div class="col-lg-8 text-center">
+                        <h2 class="serif-font fw-bold section-title">Giá trị cốt lõi</h2>
+                        <p class="text-muted">Những giá trị định hướng mọi hoạt động của chúng tôi</p>
+                    </div>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+                        <div class="card h-100 border-0 shadow-sm text-center">
+                            <div class="card-body p-4">
+                                <div class="value-icon bg-light rounded-circle mx-auto mb-4 d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-gem text-primary fs-2"></i>
+                                </div>
+                                <h4 class="serif-font fw-bold mb-3">Tinh hoa thủ công</h4>
+                                <p class="text-muted">Mỗi sản phẩm của Suncraft đều được chế tác tỉ mỉ, kết hợp giữa kỹ thuật truyền thống và sự sáng tạo hiện đại, mang đến những tác phẩm nghệ thuật độc đáo.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+                        <div class="card h-100 border-0 shadow-sm text-center">
+                            <div class="card-body p-4">
+                                <div class="value-icon bg-light rounded-circle mx-auto mb-4 d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-tree text-primary fs-2"></i>
+                                </div>
+                                <h4 class="serif-font fw-bold mb-3">Bền vững</h4>
+                                <p class="text-muted">Sử dụng nguyên liệu thân thiện với môi trường và áp dụng quy trình sản xuất bền vững, góp phần bảo vệ môi trường và duy trì nguồn tài nguyên thiên nhiên.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+                        <div class="card h-100 border-0 shadow-sm text-center">
+                            <div class="card-body p-4">
+                                <div class="value-icon bg-light rounded-circle mx-auto mb-4 d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-people text-primary fs-2"></i>
+                                </div>
+                                <h4 class="serif-font fw-bold mb-3">Trách nhiệm xã hội</h4>
+                                <p class="text-muted">Tích cực hỗ trợ cộng đồng nghệ nhân, đảm bảo đời sống ổn định và phát triển bền vững. Đặc biệt, Suncraft sẽ trích 51% lợi nhuận để tái đầu tư trở lại vào các mục tiêu của tổ chức, cộng đồng.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
+                        <div class="card h-100 border-0 shadow-sm text-center">
+                            <div class="card-body p-4">
+                                <div class="value-icon bg-light rounded-circle mx-auto mb-4 d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-bank text-primary fs-2"></i>
+                                </div>
+                                <h4 class="serif-font fw-bold mb-3">Bảo tồn văn hóa</h4>
+                                <p class="text-muted">Duy trì và phát triển các kỹ thuật thủ công truyền thống, góp phần bảo tồn bản sắc văn hóa dân tộc Việt Nam.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products & Services -->
+        <section class="section-padding bg-gold-light">
+            <div class="container">
+                <div class="row justify-content-center mb-5">
+                    <div class="col-lg-8 text-center">
+                        <h2 class="serif-font fw-bold section-title">Sản Phẩm và Dịch Vụ</h2>
+                        <p class="text-muted">Suncraft tập trung phát triển các sản phẩm làng nghề thủ công Việt Nam, mang đến sự đa dạng và phong phú trong từng sản phẩm.</p>
+                    </div>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                        <div class="card product-card border-0 shadow-sm h-100">
+                            <div class="product-img-wrapper">
+                                <img src="./images/images_lienket_suncraft/Khảm trai_sonmai/Khay-sonmai.JPG" class="card-img-top" alt="Sản phẩm sơn mài">
+                            </div>
+                            <div class="card-body text-center p-4">
+                                <h4 class="serif-font fw-bold mb-3">Sơn mài</h4>
+                                <p class="text-muted">Những tác phẩm sơn mài tinh xảo, kết hợp giữa kỹ thuật truyền thống và thiết kế hiện đại.</p>
+                                <a href="sanpham.html" class="btn btn-outline-primary mt-3">Xem thêm</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                        <div class="card product-card border-0 shadow-sm h-100">
+                            <div class="product-img-wrapper">
+                                <img src="./images/images_lienket_suncraft/Khảm trai_sonmai/tui-thocam.png" class="card-img-top" alt="Sản phẩm thổ cẩm">
+                            </div>
+                            <div class="card-body text-center p-4">
+                                <h4 class="serif-font fw-bold mb-3">Thổ cẩm</h4>
+                                <p class="text-muted">Những sản phẩm thổ cẩm đặc sắc, mang đậm bản sắc văn hóa của các dân tộc Việt Nam.</p>
+                                <a href="sanpham.html" class="btn btn-outline-primary mt-3">Xem thêm</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                        <div class="card product-card border-0 shadow-sm h-100">
+                            <div class="product-img-wrapper">
+                                <img src="./images/images_lienket_suncraft/Khảm trai_sonmai/khan lua.png" class="card-img-top" alt="Sản phẩm khăn lụa">
+                            </div>
+                            <div class="card-body text-center p-4">
+                                <h4 class="serif-font fw-bold mb-3">Lụa tơ tằm</h4>
+                                <p class="text-muted">Những sản phẩm lụa tơ tằm cao cấp, mềm mại và sang trọng, được dệt từ tơ tằm tự nhiên.</p>
+                                <a href="sanpham.html" class="btn btn-outline-primary mt-3">Xem thêm</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-4 mt-3">
+                    <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+                        <div class="card product-card border-0 shadow-sm h-100">
+                            <div class="product-img-wrapper">
+                                <img src="./images/images_lienket_suncraft/Khảm trai_sonmai/khay-khamtrai.JPG" class="card-img-top" alt="Sản phẩm khảm trai">
+                            </div>
+                            <div class="card-body text-center p-4">
+                                <h4 class="serif-font fw-bold mb-3">Khảm trai</h4>
+                                <p class="text-muted">Những tác phẩm khảm trai tinh tế, được chế tác bởi những nghệ nhân lành nghề với kỹ thuật truyền thống.</p>
+                                <a href="sanpham.html" class="btn btn-outline-primary mt-3">Xem thêm</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+                        <div class="card product-card border-0 shadow-sm h-100">
+                            <div class="product-img-wrapper">
+                                <img src="./images/images_lienket_suncraft/Khảm trai_sonmai/2khay-kham-trai.JPG" class="card-img-top" alt="Khay khảm trai và sơn mài">
+                            </div>
+                            <div class="card-body text-center p-4">
+                                <h4 class="serif-font fw-bold mb-3">Sản phẩm kết hợp</h4>
+                                <p class="text-muted">Những sản phẩm độc đáo kết hợp giữa các kỹ thuật thủ công truyền thống, tạo nên những tác phẩm nghệ thuật đặc sắc.</p>
+                                <a href="sanpham.html" class="btn btn-outline-primary mt-3">Xem thêm</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Social Activities -->
+        <section class="section-padding position-relative">
+            <div class="decorative-pattern pattern-bottom-left"></div>
+            <div class="container">
+                <div class="row align-items-center g-5">
+                    <div class="col-lg-6" data-aos="fade-right">
+                        <h2 class="serif-font fw-bold section-title mb-4">Hoạt động xã hội</h2>
+                        <p class="mb-4">Suncraft không chỉ tập trung vào hoạt động kinh doanh mà còn tích cực tham gia các dự án cộng đồng, tổ chức các chương trình đào tạo và hỗ trợ nghệ nhân, nhằm nâng cao kỹ năng và cải thiện đời sống của họ.</p>
+                        <p class="mb-4">Doanh nghiệp cũng chú trọng đến việc bảo vệ môi trường thông qua các hoạt động tái chế và sử dụng nguyên liệu bền vững.</p>
+                        <div class="d-flex align-items-center mt-4">
+                            <div class="me-4 text-center">
+                                <div class="d-flex align-items-center">
+                                    <span class="display-4 fw-bold text-primary count-up" data-target="50">50</span>
+                                    <span class="h4 mb-0 ms-2">+</span>
+                                </div>
+                                <p class="text-muted">Làng nghề được hỗ trợ</p>
+                            </div>
+                            <div class="me-4 text-center">
+                                <div class="d-flex align-items-center">
+                                    <span class="display-4 fw-bold text-primary count-up" data-target="500">500</span>
+                                    <span class="h4 mb-0 ms-2">+</span>
+                                </div>
+                                <p class="text-muted">Nghệ nhân được đào tạo</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="d-flex align-items-center">
+                                    <span class="display-4 fw-bold text-primary count-up" data-target="20">20</span>
+                                    <span class="h4 mb-0 ms-2">+</span>
+                                </div>
+                                <p class="text-muted">Dự án cộng đồng</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6" data-aos="fade-left">
+                        <div class="position-relative">
+                            <img src="./images/community_image.jpg" alt="Hoạt động cộng đồng" class="img-fluid rounded-3 shadow">
+                            <div class="decorative-box"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Future Development -->
+        <section class="section-padding bg-gold-light">
+            <div class="container">
+                <div class="row justify-content-center mb-5">
+                    <div class="col-lg-8 text-center">
+                        <h2 class="serif-font fw-bold section-title">Định Hướng Phát Triển</h2>
+                    </div>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body p-4">
+                                <div class="text-primary mb-3">
+                                    <i class="bi bi-globe2 fs-1"></i>
+                                </div>
+                                <h3 class="serif-font fw-bold mb-3">Mở rộng thị trường</h3>
+                                <p class="text-muted">Trong tương lai, Suncraft sẽ tiếp tục mở rộng thị trường cả trong nước và quốc tế, để giới thiệu, quảng bá vẻ đẹp của nghệ thuật thủ công Việt Nam đến bạn bè thế giới.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <img src="./images/images_lienket_suncraft/Khảm trai_sonmai/3ca-sonmai.JPG" class="card-img-top" alt="Sản phẩm sơn mài">
+                            <div class="card-body p-4">
+                                <h3 class="serif-font fw-bold mb-3">Nghiên cứu và phát triển</h3>
+                                <p class="text-muted">Doanh nghiệp cũng sẽ đầu tư mạnh mẽ vào nghiên cứu và phát triển, nhằm không ngừng cải tiến chất lượng sản phẩm và mang đến những giá trị tốt đẹp hơn nữa cho cộng đồng.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body p-4">
+                                <div class="text-primary mb-3">
+                                    <i class="bi bi-heart fs-1"></i>
+                                </div>
+                                <h3 class="serif-font fw-bold mb-3">Phát triển bền vững</h3>
+                                <p class="text-muted">Suncraft tin rằng, thông qua những nỗ lực và cam kết của mình, doanh nghiệp sẽ góp phần bảo tồn và phát triển nền văn hóa thủ công mỹ nghệ Việt Nam, đồng thời xây dựng một cộng đồng nghệ nhân, làng nghề phát triển bền vững và hạnh phúc và xã hội.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Section -->
+        <section class="section-padding">
+            <div class="container">
+                <div class="row justify-content-center mb-5">
+                    <div class="col-lg-8 text-center">
+                        <h2 class="serif-font fw-bold section-title">Đội ngũ của chúng tôi</h2>
+                        <p class="text-muted">Những con người tâm huyết đang nỗ lực mỗi ngày để bảo tồn và phát triển nghề thủ công truyền thống</p>
+                    </div>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+                        <div class="card team-card border-0 shadow-sm text-center h-100">
+                            <div class="team-img-wrapper">
+                                <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="Thành viên đội ngũ">
+                            </div>
+                            <div class="card-body p-4">
+                                <h4 class="serif-font fw-bold mb-1">Nguyễn Văn A</h4>
+                                <p class="text-primary mb-3">Giám đốc điều hành</p>
+                                <p class="text-muted">Với hơn 15 năm kinh nghiệm trong lĩnh vực thủ công mỹ nghệ truyền thống.</p>
+                                <div class="team-social mt-3">
+                                    <a href="#" class="btn btn-sm btn-outline-primary rounded-circle me-2"><i class="bi bi-facebook"></i></a>
+                                    <a href="#" class="btn btn-sm btn-outline-primary rounded-circle me-2"><i class="bi bi-linkedin"></i></a>
+                                    <a href="#" class="btn btn-sm btn-outline-primary rounded-circle"><i class="bi bi-envelope"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+                        <div class="card team-card border-0 shadow-sm text-center h-100">
+                            <div class="team-img-wrapper">
+                                <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="Thành viên đội ngũ">
+                            </div>
+                            <div class="card-body p-4">
+                                <h4 class="serif-font fw-bold mb-1">Trần Thị B</h4>
+                                <p class="text-primary mb-3">Giám đốc sáng tạo</p>
+                                <p class="text-muted">Chuyên gia trong lĩnh vực thiết kế và phát triển sản phẩm thủ công mỹ nghệ.</p>
+                                <div class="team-social mt-3">
+                                    <a href="#" class="btn btn-sm btn-outline-primary rounded-circle me-2"><i class="bi bi-facebook"></i></a>
+                                    <a href="#" class="btn btn-sm btn-outline-primary rounded-circle me-2"><i class="bi bi-linkedin"></i></a>
+                                    <a href="#" class="btn btn-sm btn-outline-primary rounded-circle"><i class="bi bi-envelope"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+                        <div class="card team-card border-0 shadow-sm text-center h-100">
+                            <div class="team-img-wrapper">
+                                <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="Thành viên đội ngũ">
+                            </div>
+                            <div class="card-body p-4">
+                                <h4 class="serif-font fw-bold mb-1">Lê Văn C</h4>
+                                <p class="text-primary mb-3">Giám đốc phát triển</p>
+                                <p class="text-muted">Chuyên gia về phát triển cộng đồng và các dự án xã hội.</p>
+                                <div class="team-social mt-3">
+                                    <a href="#" class="btn btn-sm btn-outline-primary rounded-circle me-2"><i class="bi bi-facebook"></i></a>
+                                    <a href="#" class="btn btn-sm btn-outline-primary rounded-circle me-2"><i class="bi bi-linkedin"></i></a>
+                                    <a href="#" class="btn btn-sm btn-outline-primary rounded-circle"><i class="bi bi-envelope"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
+                        <div class="card team-card border-0 shadow-sm text-center h-100">
+                            <div class="team-img-wrapper">
+                                <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="Thành viên đội ngũ">
+                            </div>
+                            <div class="card-body p-4">
+                                <h4 class="serif-font fw-bold mb-1">Phạm Thị D</h4>
+                                <p class="text-primary mb-3">Giám đốc marketing</p>
+                                <p class="text-muted">Chuyên gia về xây dựng thương hiệu và phát triển thị trường.</p>
+                                <div class="team-social mt-3">
+                                    <a href="#" class="btn btn-sm btn-outline-primary rounded-circle me-2"><i class="bi bi-facebook"></i></a>
+                                    <a href="#" class="btn btn-sm btn-outline-primary rounded-circle me-2"><i class="bi bi-linkedin"></i></a>
+                                    <a href="#" class="btn btn-sm btn-outline-primary rounded-circle"><i class="bi bi-envelope"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer Section -->
+        <footer class="bg-gold-light pt-5 pb-3">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-lg-4">
+                        <div class="footer-brand mb-3">
+                            <img src="./Suncraft_website_Inf/suncraft_logo/e6e59529-b1df-4676-a5b2-f3757e67957e.png" alt="Suncraft logo" style="width:120px;height:115px;">
+                        </div>
+                        <p class="mb-4">Suncraft - Nơi hội tụ tinh hoa nghề thủ công Việt Nam, kết nối các nghệ nhân tài hoa với những người yêu thích nghệ thuật truyền thống.</p>
+                        <div class="d-flex gap-3 mb-3">
+                            <a href="https://www.facebook.com/share/1FVZwMHwFb/?mibextid=wwXIfr" class="social-link">
+                                <i class="bi bi-facebook"></i>
+                            </a>
+                            <a href="#" class="social-link">
+                                <i class="bi bi-instagram"></i>
+                            </a>
+                            <a href="#" class="social-link">
+                                <i class="bi bi-youtube"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-6">
+                        <h5 class="footer-heading mb-3">Danh mục</h5>
+                        <ul class="footer-links">
+                            <li><a href="sanpham.html">Sơn mài</a></li>
+                            <li><a href="sanpham.html">Lụa tơ tằm</a></li>
+                            <li><a href="sanpham.html">Thổ cẩm</a></li>
+                            <li><a href="sanpham.html">Gốm sứ</a></li>
+                            <li><a href="sanpham.html">Đồ gỗ mỹ nghệ</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-2 col-md-6">
+                        <h5 class="footer-heading mb-3">Liên kết</h5>
+                        <ul class="footer-links">
+                            <li><a href="index.html">Trang chủ</a></li>
+                            <li><a href="blog.html">Blog</a></li>
+                            <li><a href="lienket.html">Liên kết</a></li>
+                            <li><a href="lien_he.html">Liên hệ</a></li>
+                            <li><a href="#">Chính sách bảo hành</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-4 col-md-12">
+                        <h5 class="footer-heading mb-3">Đăng ký nhận tin</h5>
+                        <p class="mb-3">Đăng ký để nhận thông tin về sản phẩm mới và khuyến mãi</p>
+                        <form class="footer-subscribe-form mb-3">
+                            <div class="input-group">
+                                <input type="email" class="form-control" placeholder="Email của bạn" aria-label="Email của bạn">
+                                <button class="btn btn-primary" type="submit">Đăng ký</button>
+                            </div>
+                        </form>
+                        <p class="small">Liên hệ: <a href="mailto:info@suncraft.vn">info@suncraft.vn</a></p>
+                    </div>
+                </div>
+                <hr class="mt-4 mb-3">
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-center text-md-start">
+                        <p class="small text-muted mb-md-0">© 2025 Suncraft. Tất cả quyền được bảo lưu.</p>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <ul class="list-inline mb-0 small">
+                            <li class="list-inline-item"><a href="#" class="text-muted">Điều khoản sử dụng</a></li>
+                            <li class="list-inline-item"><span class="text-muted">•</span></li>
+                            <li class="list-inline-item"><a href="#" class="text-muted">Chính sách bảo mật</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Custom JavaScript -->
+    <script>
+        // Initialize AOS animation
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true,
+            mirror: false
+        });
+
+        // Count up animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const countElements = document.querySelectorAll('.count-up');
+            
+            countElements.forEach(function(element) {
+                const target = parseInt(element.getAttribute('data-target'));
+                let count = 0;
+                const duration = 2000; // ms
+                const increment = Math.ceil(target / (duration / 16)); // 60fps
+                
+                const timer = setInterval(function() {
+                    count += increment;
+                    if (count >= target) {
+                        element.textContent = target;
+                        clearInterval(timer);
+                    } else {
+                        element.textContent = count;
+                    }
+                }, 16);
+            });
+        });
+
+        // Search functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchContainer = document.querySelector('.search-container');
+            const desktopSearchBtn = document.getElementById('desktopSearchBtn');
+            const mobileSearchBtn = document.getElementById('mobileSearchBtn');
+            const searchCloseBtn = document.querySelector('.search-close');
+            
+            // Open search bar when search button is clicked
+            desktopSearchBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                searchContainer.style.display = 'block';
+                searchContainer.querySelector('input').focus();
+            });
+            
+            mobileSearchBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                searchContainer.style.display = 'block';
+                searchContainer.querySelector('input').focus();
+            });
+            
+            // Close search bar when close button is clicked
+            searchCloseBtn.addEventListener('click', function() {
+                searchContainer.style.display = 'none';
+            });
+            
+            // Handle search form submission
+            document.querySelector('.search-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const searchTerm = this.querySelector('input').value.trim();
+                if (searchTerm) {
+                    // Redirect to search results page with search term
+                    window.location.href = 'search.html?q=' + encodeURIComponent(searchTerm);
+                }
+            });
+        });
+
+        // FAB Menu Toggle - Sửa lại để hoạt động đúng
+        document.addEventListener('DOMContentLoaded', function() {
+            const fabToggle = document.getElementById('fab-toggle');
+            const fabMenu = document.getElementById('fab-menu');
+            
+            if (fabToggle && fabMenu) {
+                fabToggle.addEventListener('click', function(event) {
+                    event.stopPropagation(); // Ngăn sự kiện click lan ra ngoài
+                    fabMenu.classList.toggle('active');
+                    
+                    // Rotate icon when active
+                    if (fabMenu.classList.contains('active')) {
+                        this.innerHTML = '<i class="bi bi-x fs-4"></i>';
+                    } else {
+                        this.innerHTML = '<i class="bi bi-list fs-4"></i>';
+                    }
+                });
+                
+                // Close menu when clicking elsewhere
+                document.addEventListener('click', function(event) {
+                    if (!event.target.closest('.fab-container')) {
+                        fabMenu.classList.remove('active');
+                        fabToggle.innerHTML = '<i class="bi bi-list fs-4"></i>';
+                    }
+                });
+                
+                // Ngăn chặn sự kiện click trên các item không lan ra
+                const fabItems = document.querySelectorAll('.fab-item');
+                fabItems.forEach(item => {
+                    item.addEventListener('click', function(event) {
+                        event.stopPropagation();
+                    });
+                });
+            } else {
+                console.log('FAB elements not found');
+            }
+        });
+
+        // Chức năng chuyển đổi ngôn ngữ
+        document.addEventListener('DOMContentLoaded', function() {
+            var languageToggle = document.getElementById('language-toggle');
+            if (languageToggle) {
+                languageToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log("Nút ngôn ngữ được nhấp");
+                    switchLanguage();
+                });
+                
+                // Cập nhật hiển thị nút dựa trên ngôn ngữ hiện tại
+                var lang = getCookie('googtrans');
+                if (lang === '/vi/en') {
+                    languageToggle.textContent = 'VI';
+                } else {
+                    languageToggle.textContent = 'EN';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+body {
+    text-decoration: none;
+    color: rgb(144, 2, 2);
+}
+#country a {
+    display: none;
+}
+#country:hover {
+    #country_dropdown {
+        display: block;
+    }
+}
